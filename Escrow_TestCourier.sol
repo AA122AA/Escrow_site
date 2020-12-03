@@ -1,8 +1,5 @@
 pragma solidity 0.5.1;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "../access/Whitelist.sol";
-
 contract EscrowBaseContract {
 
     enum State {AWAITING_PAYMENT, AWAITING_DELIVERY, COMPLETE}
@@ -16,17 +13,12 @@ contract EscrowBaseContract {
         uint256 deposit;
         State currentState;
     }
-    
-    Whitelist whitelist;
-    
-    constructor(address _whitelistAddress) public {
-        whitelist = Whitelist(___); // ДОБАВИТЬ АДРЕС КУРЬЕРА
-    }
 
     address payable constant seller = 0x0667FA2A9dDF39d6921373FFA82E4a48C31b2a97;
+    address constant courier = 0x0667FA2A9dDF39d6921373FFA82E4a48C31b2a97;
     uint256 OrderCount;
     mapping(uint => Order) public order_list;
-    modifier onlyCourier(){require(whitelist.isMember(msg.sender)); _;}
+    modifier onlyCourier(){require(msg.sender == courier); _;}
     //modifier inState(State expectedState, uint id){require(order_list[id].currentState == expectedState); _;}
     
     
@@ -51,7 +43,7 @@ contract EscrowBaseContract {
         withdraw(id);
     }
 
-    function withdraw(uint256 id) internal onlySeller {
+    function withdraw(uint256 id) internal {
         uint256 payment = order_list[id].deposit;
         order_list[id].deposit = 0;
         seller.transfer(payment);
@@ -59,4 +51,3 @@ contract EscrowBaseContract {
     }
     
 }
-

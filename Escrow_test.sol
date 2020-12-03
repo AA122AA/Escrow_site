@@ -5,53 +5,49 @@ contract EscrowBaseContract {
     enum State {AWAITING_PAYMENT, AWAITING_DELIVERY, COMPLETE}
 
     //State currentState;
-
+    State constant default_value  = State.AWAITING_PAYMENT;
     //address buyer;
     struct Order { 
         uint id;
-        address s_buyer;
+        address buyer;
         uint256 deposit;
         State currentState;
     }
     
     address payable constant seller = 0x0667FA2A9dDF39d6921373FFA82E4a48C31b2a97;
+    uint256 OrderCount;
     mapping(uint => Order) public order_list;
     modifier onlySeller(){require(msg.sender == seller); _;}
-    modifier inState(State expectedState){require(Order.currentState == expectedState); _;}
+    //modifier inState(State expectedState, uint id){require(order_list[id].currentState == expectedState); _;}
     
     
-    constructor () public {
-        buyer = msg.sender;
-        currentState = State.AWAITING_PAYMENT;
-    }
-    
-    function CheckState() public view returns(string memory) {
-        if(currentState == State.AWAITING_PAYMENT)
+    function CheckState(uint id) public view returns(string memory) {
+        if(order_list[id].currentState == State.AWAITING_PAYMENT)
             return 'Awaiting payment';
-        if(currentState == State.AWAITING_DELIVERY)
+        if(order_list[id].currentState == State.AWAITING_DELIVERY)
             return 'Awaiting Delivery';
         else return 'Complete';
     }
  
-    function deposit(address f_buyer) public inState(State.AWAITING_PAYMENT) payable {
+    function deposit(address buyer_ad) public  payable {
         uint256 amount = msg.value;
-        buyer = f_buyer;
-        deposits[buyer] = deposits[buyer] + amount;
-        currentState = State.AWAITING_DELIVERY;
+        OrderCount+=1;
+        order_list[OrderCount].buyer = buyer_ad;
+        order_list[OrderCount].deposit = order_list[OrderCount].deposit + amount;
+        order_list[OrderCount].currentState = State.AWAITING_DELIVERY;
     }
 
-    function delivered() public onlySeller inState(State.AWAITING_DELIVERY){
-        currentState = State.COMPLETE;
-        withdraw();
+    function delivered(uint256 id) public onlySeller {
+        order_list[id].currentState = State.COMPLETE;
+        withdraw(id);
     }
 
-    function withdraw() private onlySeller inState(State.COMPLETE){
-        uint256 payment = deposits[buyer];
-        deposits[buyer] = 0;
+    function withdraw(uint256 id) internal onlySeller {
+        uint256 payment = order_list[id].deposit;
+        order_list[id].deposit = 0;
         seller.transfer(payment);
-        currentState=State.AWAITING_PAYMENT;
+        order_list[id].currentState=State.AWAITING_PAYMENT;
     }
     
 }
-
 

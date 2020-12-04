@@ -8,7 +8,6 @@ contract EscrowBaseContract {
     State constant default_value  = State.AWAITING_PAYMENT;
     //address buyer;
     struct Order { 
-        uint id;
         address buyer;
         uint256 deposit;
         State currentState;

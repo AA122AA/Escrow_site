@@ -46,7 +46,6 @@ contract EscrowBaseContract {
         uint256 payment = order_list[id].deposit;
         order_list[id].deposit = 0;
         seller.transfer(payment);
-        order_list[id].currentState=State.AWAITING_PAYMENT;
     }
     
 }

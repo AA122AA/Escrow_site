@@ -10,10 +10,13 @@ class Product(models.Model):
     - Название товара
     - Описание 
     """
-    id = models.IntegerField(default=0)
+    product_id = models.IntegerField(default=0)
     amount = models.IntegerField(default=0)
     price = models.FloatField(default=0)
     name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
 
 class Users(models.Model):
     """
@@ -27,3 +30,6 @@ class Users(models.Model):
     login = models.EmailField()
     password = models.CharField(max_length=25)
     role = models.IntegerField(default=0)
+    def __str__(self):
+        return self.login
+

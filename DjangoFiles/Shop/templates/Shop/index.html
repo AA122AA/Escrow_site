@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,8 +7,8 @@
 	<meta name="viewport" content="width=950">
 
 	<!-- CSS -->
-	<link rel="stylesheet" type="text/css" href="css/reset.css" />
-	<link rel="stylesheet" type="text/css" href="css/style.css?v=2">
+	<link rel="stylesheet" type="text/css" href={% static 'Shop/css/reset.css'%} />
+	<link rel="stylesheet" type="text/css" href={% static 'Shop/css/style.css'%}>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
@@ -62,7 +63,7 @@
 	<ul class="container">
 	<li id="iphone">
 			<article class="iphone12_pro">
-				<img alt="iPhone new" src="images/iPhone12_pro.png">
+				<img alt="iPhone new" src={% static "Shop/images/iPhone12_pro.png"%}>
 				<h2>iPhone 12 Pro</h2>
 				<ul>
 				<li>серебристый/графитовый/</li>
@@ -84,14 +85,14 @@
 					<li>iPhone 12 Pro Max 256GB &mdash; <a href="" onclick=""><span>128 000</span></a> ₽</li>
 					<li>iPhone 12 Pro Max 512GB &mdash; <a href="" onclick=""><span>148 000</span></a> ₽</li>
 				</ul>
-				<img alt="iPhone new" src="images/new.png">
+				<img alt="iPhone new" src={% static "Shop/images/new.png"%}>
 
 				<li><br/></li>
 			</article>
 		</li>
 	<li id="iphone">
 			<article class="iphone12">
-				<img alt="iPhone new" src="images/iPhone12_3 copy.png">
+				<img alt="iPhone new" src={% static "Shop/images/iPhone12_3 copy.png"%}>
 				<h2>iPhone 12</h2>
 				<ul>
 				<li style="margin-bottom:15px">черный/белый/красный/зеленый/синий</li>
@@ -109,7 +110,7 @@
 					<li>iPhone 12 mini 128GB &mdash; <a href="" onclick=""><span>75 500</span></a> ₽</li>
 					<li>iPhone 12 mini 256GB &mdash; <span>скоро!</span></li>
 				</ul>
-				<img alt="iPhone new" src="images/new.png">
+				<img alt="iPhone new" src= {% static 'Shop/images/new.png' %}>
 				<li><br/></li>
 					<li><br/></li>
 					<li><br/></li>
@@ -117,7 +118,7 @@
 		</li>
 		<li id="iphone">
 			<article class="iphone_pro">
-				<img alt="iPhone new" src="images/iphone_pro_2.png">
+				<img alt="iPhone new" src={% static 'Shop/images/iphone_pro_2.png' %}>
 				<h2>iPhone 11 Pro</h2>
 				<ul>
 				<li>темно-зеленый/золотой/</li>

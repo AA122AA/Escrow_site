@@ -33,7 +33,7 @@
 			</span>
 			<br>
 			<div class="guest_login">
-				<h3><a href={% url 'registr' %}>Зарегистрироваться</a></h3>
+				<h3 id="address"></h3>
 				<h3><button id="login_but">Войти</button></h3>
 				{% comment %} <h3><a href={% url 'login' %}>Войти</a></h3> {% endcomment %}
 			</div>
@@ -148,12 +148,15 @@
 	<script> 
 	login_but.addEventListener('click', function () {
 	  connect()
+
 	})
 
 	function connect () {
 	  	if (typeof ethereum !== 'undefined') {
     		ethereum.enable()
     		.catch(console.error)
+			var addr = web3.eth.accounts[0]
+	  		document.getElementById("address").innerHTML=addr;
   		}
 	}
 </script>

@@ -8,33 +8,36 @@ contract EscrowBaseContract {
     State constant default_value  = State.AWAITING_PAYMENT;
     //address buyer;
     struct Order { 
-        uint id;
         address buyer;
         uint256 deposit;
         State currentState;
+        uint32 OrderTime;
     }
     
-    address payable constant seller = 0x0667FA2A9dDF39d6921373FFA82E4a48C31b2a97;
+    address payable constant seller = 0x7662aE8Cd04DB7B568acA1a364b43Add9d3294b7;
     uint256 OrderCount;
     mapping(uint => Order) public order_list;
     modifier onlySeller(){require(msg.sender == seller); _;}
     //modifier inState(State expectedState, uint id){require(order_list[id].currentState == expectedState); _;}
+    modifier onlyBuyer(uint256 id){require(msg.sender == order_list[id].buyer); _;}
+    modifier timePassed(uint256 id, uint256 time){require(now - order_list[id].OrderTime >= time); _;}
+    modifier depositCheck(uint256 id){require(order_list[id].deposit != 0); _;}
     
-    
-    function CheckState(uint id) public view returns(string memory) {
+    function CheckState(uint id) public view returns(State currentState) {
         if(order_list[id].currentState == State.AWAITING_PAYMENT)
-            return 'Awaiting payment';
+            return State.AWAITING_PAYMENT;
         if(order_list[id].currentState == State.AWAITING_DELIVERY)
-            return 'Awaiting Delivery';
-        else return 'Complete';
+            return State.AWAITING_DELIVERY;
+        else return State.COMPLETE;
     }
  
-    function deposit(address buyer_ad) public  payable {
+    function deposit() public payable {
         uint256 amount = msg.value;
         OrderCount+=1;
-        order_list[OrderCount].buyer = buyer_ad;
+        order_list[OrderCount].buyer = msg.sender;
         order_list[OrderCount].deposit = order_list[OrderCount].deposit + amount;
         order_list[OrderCount].currentState = State.AWAITING_DELIVERY;
+        order_list[OrderCount].OrderTime = uint32(now);
     }
 
     function delivered(uint256 id) public onlySeller {
@@ -48,5 +51,16 @@ contract EscrowBaseContract {
         seller.transfer(payment);
     }
     
+    // Пока что через id, найти способ делать это через авторизацию метамаска 
+    // Можно оставить кнопку как отмен заказа, доступный только N времени после самого заказа
+    // либо сделать её доступной только через N времени после заказа, если он так и не пришёл
+    
+    // Сейчас сделан второй способ
+    
+    function Refund(uint256 id) public onlyBuyer(id) timePassed(id, 5 minutes) depositCheck(id){
+        msg.sender.transfer(order_list[id].deposit);
+        order_list[id].deposit = 0;
+        
+    }
+    
 }
-

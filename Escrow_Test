@@ -1,4 +1,4 @@
-pragma solidity 0.5.1;
+ pragma solidity 0.5.1;
 
 contract EscrowBaseContract {
 
@@ -14,13 +14,13 @@ contract EscrowBaseContract {
         uint32 OrderTime;
     }
     
-    address payable constant seller = 0x0667FA2A9dDF39d6921373FFA82E4a48C31b2a97;
+    address payable constant seller = 0x7662aE8Cd04DB7B568acA1a364b43Add9d3294b7;
     uint256 OrderCount;
     mapping(uint => Order) public order_list;
     modifier onlySeller(){require(msg.sender == seller); _;}
     //modifier inState(State expectedState, uint id){require(order_list[id].currentState == expectedState); _;}
-    
-    // Сделал, чтобы возвращало не строку, а состояние State
+    modifier onlyBuyer(uint256 id){require(msg.sender == order_list[id].buyer); _;}
+    modifier TimePassed(uint256 id, uint256 time){require(now - order_list[id].OrderTime >= time); _;}
     
     function CheckState(uint id) public view returns(State currentState) {
         if(order_list[id].currentState == State.AWAITING_PAYMENT)
@@ -30,7 +30,7 @@ contract EscrowBaseContract {
         else return State.COMPLETE;
     }
  
-    function deposit(address buyer_ad) public  payable {
+    function deposit(address buyer_ad) public payable {
         uint256 amount = msg.value;
         OrderCount+=1;
         order_list[OrderCount].buyer = buyer_ad;
@@ -54,13 +54,12 @@ contract EscrowBaseContract {
     // Можно оставить кнопку как отмен заказа, доступный только N времени после самого заказа
     // либо сделать её доступной только через N времени после заказа, если он так и не пришёл
     
-    // Сейчас выполняется (должен) второй способ
+    // Сейчас сделан второй способ
     
-    function CancelOrder(uint256 id) public {
-        uint256 payment = order_list[id].deposit;
-        if (msg.sender == order_list[id].buyer && now - order_list[id].OrderTime >= 30 days)
-            order_list[id].deposit = 0;
-            msg.sender.transfer(payment);
+    function CancelOrder(uint256 id) public onlyBuyer(id) TimePassed(id, 5 minutes){
+        msg.sender.transfer(order_list[id].deposit);
+        order_list[id].deposit = 0;
+        
     }
     
 }

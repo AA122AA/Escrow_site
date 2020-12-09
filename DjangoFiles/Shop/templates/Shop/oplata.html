@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,8 +7,8 @@
 	<meta name="viewport" content="width=950">
 
 	<!-- CSS -->
-	<link rel="stylesheet" type="text/css" href="css/reset.css" />
-	<link rel="stylesheet" type="text/css" href="css/style.css?v=2">
+	<link rel="stylesheet" type="text/css" href={% static 'Shop/css/reset.css' %}/>
+	<link rel="stylesheet" type="text/css" href={% static 'Shop/css/style.css' %}>
 
 	<title>Проект 4 команды, escrow-контракты для интернет-магазина</title>
 </head>
@@ -21,7 +22,7 @@
 		</div>
 		<div class="command_name">
 			<p>Команда №4</p>
-			<a href="index.html">На главную</a>
+			<a href={% url 'index' %}>На главную</a>
 		</div>
 		<div class="phone right">
 			<h1>8 (800) 555 35 35</h1>
@@ -30,8 +31,8 @@
 			</span>
 			<br>
 			<div class="guest_login">
-				<h3><a href="registration.html">Зарегистрироваться</a></h3>
-				<h3><a href="login.html">Войти</a></h3>
+				<h3><a href={% url 'registr' %}>Зарегистрироваться</a></h3>
+				<h3><a href={% url 'login' %}>Войти</a></h3>
 			</div>
 			<div class="user_login">
 				<h3><a href="">Выйти</a></h3>
@@ -43,14 +44,14 @@
 <header class="header">
 	<div class="clear"></div>
 	<div id="infoContainer">
-		<a href="dostavka.html" class="dostavka"><span class="title">Доставка</span>За сутки по СПб,<br/>отправка по всей России!</a>
-		<a href="oplata.html" class="oplata"><span class="title">Оплата</span>0% платежи от регионов,<br/>работаем с юр. лицами!</a>
-		<a href="garanty.html" class="garanty"><span class="title">Гарантия</span>1 год на всю технику!</a>
-		<a href="lk_user.html" class="lk">
+		<a href={% url 'dostavka' %} class="dostavka"><span class="title">Доставка</span>За сутки по СПб,<br/>отправка по всей России!</a>
+		<a href={% url 'oplata' %} class="oplata"><span class="title">Оплата</span>0% платежи от регионов,<br/>работаем с юр. лицами!</a>
+		<a href={% url 'garanty' %} class="garanty"><span class="title">Гарантия</span>1 год на всю технику!</a>
+		<a href={% url 'lk_user' %} class="lk">
 			<span class="title">Личный<br>Кабинет</span>
 			<p>Сервис  /// </p>
 		</a>
-		 <a href="contacts.html" class="contacts noBorder"><span class="title">Контакты</span>Работаем каждый день<br/>с 10.00 до 21.00</a>
+		<a href={% url 'contacts' %} class="contacts noBorder"><span class="title">Контакты</span>Работаем каждый день<br/>с 10.00 до 21.00</a>
 	</div>
 
 <!-- END header -->

@@ -30,10 +30,10 @@ contract EscrowBaseContract {
         else return State.COMPLETE;
     }
  
-    function deposit(address buyer_ad) public payable {
+    function deposit() public payable {
         uint256 amount = msg.value;
         OrderCount+=1;
-        order_list[OrderCount].buyer = buyer_ad;
+        order_list[OrderCount].buyer = msg.sender;
         order_list[OrderCount].deposit = order_list[OrderCount].deposit + amount;
         order_list[OrderCount].currentState = State.AWAITING_DELIVERY;
         order_list[OrderCount].OrderTime = uint32(now);

@@ -20,7 +20,8 @@ contract EscrowBaseContract {
     modifier onlySeller(){require(msg.sender == seller); _;}
     //modifier inState(State expectedState, uint id){require(order_list[id].currentState == expectedState); _;}
     modifier onlyBuyer(uint256 id){require(msg.sender == order_list[id].buyer); _;}
-    modifier TimePassed(uint256 id, uint256 time){require(now - order_list[id].OrderTime >= time); _;}
+    modifier timePassed(uint256 id, uint256 time){require(now - order_list[id].OrderTime >= time); _;}
+    modifier depositCheck(uint256 id){require(order_list[id].deposit != 0); _;}
     
     function CheckState(uint id) public view returns(State currentState) {
         if(order_list[id].currentState == State.AWAITING_PAYMENT)
@@ -56,7 +57,7 @@ contract EscrowBaseContract {
     
     // Сейчас сделан второй способ
     
-    function CancelOrder(uint256 id) public onlyBuyer(id) TimePassed(id, 5 minutes){
+    function Refund(uint256 id) public onlyBuyer(id) timePassed(id, 5 minutes) depositCheck(id){
         msg.sender.transfer(order_list[id].deposit);
         order_list[id].deposit = 0;
         

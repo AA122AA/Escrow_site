@@ -3,6 +3,7 @@ from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.views import View
 from django.http import HttpResponse
+from .models import Users, Product 
 # Create your views here.
 
 class IndexView(View):
@@ -10,7 +11,9 @@ class IndexView(View):
     Class for index.html page
     """
     def get(self, request):
-        return render(request, 'Shop/index.html')
+        iphones = Product.objects.values()
+        context = {'iphones': iphones}
+        return render(request, 'Shop/index.html', context = context)
 
 class ContactsView(View):
     """

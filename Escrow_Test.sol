@@ -52,7 +52,7 @@ contract EscrowBaseContract {
         else return 'Refunded.';
     }
     
-    function _getState(uint id) internal view returns(State currentState) {
+    function _getState(uint id) external view returns(State currentState) {
         return order_list[id].currentState;
     }
  

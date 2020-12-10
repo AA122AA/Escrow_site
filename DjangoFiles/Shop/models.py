@@ -29,7 +29,7 @@ class Users(models.Model):
     wallet_adress = models.CharField(max_length=200)
     login = models.EmailField()
     password = models.CharField(max_length=25)
-    role = models.IntegerField(default=0)
+    role = models.IntegerField(default=1)
     def __str__(self):
         return self.login
 

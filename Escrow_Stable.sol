@@ -33,11 +33,7 @@ contract EscrowBaseContract {
     }
     
     function _getState(uint id) internal view returns(State currentState) {
-        if(order_list[id].currentState == State.AWAITING_PAYMENT)
-            return State.AWAITING_PAYMENT;
-        if(order_list[id].currentState == State.AWAITING_DELIVERY)
-            return State.AWAITING_DELIVERY;
-        else return State.COMPLETE;
+        return order_list[id].currentState;
     }
  
     function deposit() public payable {

@@ -143,23 +143,24 @@
 	</ul>
 	<script type="text/javascript">
 
-	login_but.addEventListener('click', function() {
-	  connect()
+		login_but.addEventListener('click', function() {
+	  	connect()
 
-	})
+		})
 
-	function connect () {
-	  	if (typeof ethereum !== 'undefined') {
-    		ethereum.enable()
-    		.catch(console.error)
-			var addr = web3.eth.accounts[0]
-	  		document.getElementById("address").innerHTML=addr;
-  		}
-		else{
- 		    document.getElementById("demo1").innerHTML = "Error";
-    	}
-	}
-	    payButton.addEventListener('click', async () => {
+		function connect () {
+	  		if (typeof ethereum !== 'undefined') {
+    			ethereum.enable()
+    			.catch(console.error)
+				var addr = web3.eth.accounts[0]
+	  			document.getElementById("address").innerHTML=addr;
+  			}
+			else{
+ 		    	document.getElementById("demo1").innerHTML = "Error";
+    		}
+		}
+
+	    payOrder.addEventListener('click', async () => {
 	      if (window.ethereum) {
 	        window.web3 = new Web3(ethereum);
 	        try {

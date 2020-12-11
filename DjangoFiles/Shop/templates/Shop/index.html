@@ -71,16 +71,16 @@
 				<li>золотой/"тихоокеанский синий"</li>
 					<li style="margin-bottom:15px"></li>
 				
-					<li>iPhone 12 Pro 128GB &mdash; <a href="" class="payButton"><span>{{ iphones.12.price }}</span></a> ₽</li>
-					<li>iPhone 12 Pro 256GB &mdash; <a href="" class="payButton"><span>{{ iphones.13.price }}</span></a> ₽</li>
-					<li>iPhone 12 Pro 512GB &mdash; <a href="" class="payButton"><span>{{ iphones.14.price }}</span></a> ₽</li>
+					<li>iPhone 12 Pro 128GB &mdash; <button class="btn payOrder">{{ iphones.12.price }}</button> ₽</li>
+					<li>iPhone 12 Pro 256GB &mdash; <button class="btn payOrder">{{ iphones.13.price }}</button> ₽</li>
+					<li>iPhone 12 Pro 512GB &mdash; <button class="btn payOrder">{{ iphones.14.price }}</button> ₽</li>
 				<li><br/></li>
 				<ul>
 					<li style="margin-bottom:15px"></li>
 				
-					<li>iPhone 12 Pro Max 128GB &mdash; <a href="" class="payButton"><span>{{ iphones.15.price }}</span></a> ₽</li>
-					<li>iPhone 12 Pro Max 256GB &mdash; <a href="" class="payButton"><span>{{ iphones.16.price }}</span></a> ₽</li>
-					<li>iPhone 12 Pro Max 512GB &mdash; <a href="" class="payButton"><span>{{ iphones.17.price }}</span></a> ₽</li>
+					<li>iPhone 12 Pro Max 128GB &mdash; <button class="btn payOrder">{{ iphones.15.price }}</button> ₽</li>
+					<li>iPhone 12 Pro Max 256GB &mdash; <button class="btn payOrder">{{ iphones.16.price }}</button> ₽</li>
+					<li>iPhone 12 Pro Max 512GB &mdash; <button class="btn payOrder">{{ iphones.17.price }}</button> ₽</li>
 				</ul>
 				<img alt="iPhone new" src={% static 'Shop/images/new.png' %}>
 
@@ -95,16 +95,16 @@
 				<li style="margin-bottom:15px">черный/белый/красный/зеленый/синий</li>
 					<li style="margin-bottom:15px"></li>
 				
-					<li>iPhone 12 64GB &mdash; <a href="" class="payButton"><span>{{ iphones.6.price }}</span></a> ₽</li>
-					<li>iPhone 12 128GB &mdash; <a href="" class="payButton"><span>{{ iphones.7.price }}</span></a> ₽</li>
-					<li>iPhone 12 256GB &mdash; <a href="" class="payButton"><span>{{ iphones.8.price }}</span></a> ₽</li>
+					<li>iPhone 12 64GB &mdash; <button class="btn payOrder">{{ iphones.6.price }}</button> ₽</li>
+					<li>iPhone 12 128GB &mdash; <button class="btn payOrder">{{ iphones.7.price }}</button> ₽</li>
+					<li>iPhone 12 256GB &mdash; <button class="btn payOrder">{{ iphones.8.price }}</button> ₽</li>
 				</ul>
 				<li><br/></li>
 				<ul>
 					<li style="margin-bottom:15px"></li>
 				
-					<li>iPhone 12 mini 64GB &mdash; <a href="" class="payButton"><span>{{ iphones.9.price }}</span></a> ₽</li>
-					<li>iPhone 12 mini 128GB &mdash; <a href="" class="payButton"><span>{{ iphones.10.price }}</span></a> ₽</li>
+					<li>iPhone 12 mini 64GB &mdash; <button class="btn payOrder">{{ iphones.9.price }}</button> ₽</li>
+					<li>iPhone 12 mini 128GB &mdash; <button class="btn payOrder">{{ iphones.10.price }}</button> ₽</li>
 					<li>iPhone 12 mini 256GB &mdash; <span>скоро!</span></li>
 				</ul>
 				<img alt="iPhone new" src={% static 'Shop/images/new.png' %}>
@@ -122,17 +122,17 @@
 				<li style="margin-bottom:15px">серебристый/«серый космос»</li>
 					<li style="margin-bottom:15px"></li>
 				
-					<li>iPhone 11 Pro 64GB  &mdash; <a href="" class="payButton"><span>{{ iphones.0.price }}</span></a> ₽</li>
-					<li>iPhone 11 Pro 256GB  &mdash; <a href="" class="payButton"><span>{{ iphones.1.price }}</span></a> ₽</li>
-					<li>iPhone 11 Pro 512GB  &mdash; <a href="" class="payButton"><span>{{ iphones.2.price }}</span></a> ₽</li>
+					<li>iPhone 11 Pro 64GB  &mdash; <button class="btn payOrder">{{ iphones.0.price }}</button> ₽</li>
+					<li>iPhone 11 Pro 256GB  &mdash; <button class="btn payOrder">{{ iphones.1.price }}</button> ₽</li>
+					<li>iPhone 11 Pro 512GB  &mdash; <button class="btn payOrder">{{ iphones.2.price }}</button> ₽</li>
 				</ul>
 			<li><br/></li>
 			<ul> 
 				<li style="margin-bottom:15px"></li>
 							
-				<li>iPhone 11 Pro Max 64GB  &mdash; <a href="" class="payButton"><span>{{ iphones.3.price }}</span></a> ₽</li>
-			    <li>iPhone 11 Pro Max 256GB  &mdash; <a href="" class="payButton"><span>{{ iphones.4.price }}</span></a> ₽</li>
-			    <li>iPhone 11 Pro Max 512GB  &mdash; <a href="" class="payButton"><span>{{ iphones.5.price }}</span></a> ₽</li>
+				<li>iPhone 11 Pro Max 64GB  &mdash; <button class="btn payOrder">{{ iphones.3.price }}</button> ₽</li>
+			    <li>iPhone 11 Pro Max 256GB  &mdash; <button class="btn payOrder">{{ iphones.4.price }}</button> ₽</li>
+			    <li>iPhone 11 Pro Max 512GB  &mdash; <button class="btn payOrder">{{ iphones.5.price }}</button> ₽</li>
 		    </ul>
             <li><br/></li>
 			<li><br/></li>
@@ -178,7 +178,7 @@
 
 
 	const initPaypayButton = () => {
-		$('.payButton',).click(() => {
+		$('.payOrder',).click(() => {
 		//var amountEth = parseInt(text) / ethRate
 			const amountEth = 0.5
 			const abi=[{"constant":true,"inputs":[{"name":"id","type":"uint256"}],"name":"CheckState","outputs":[{"name":"currentState","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"id","type":"uint256"}],"name":"Refund","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"id","type":"uint256"}],"name":"delivered","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"order_list","outputs":[{"name":"buyer","type":"address"},{"name":"deposit","type":"uint256"},{"name":"currentState","type":"uint8"},{"name":"OrderTime","type":"uint32"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"deposit","outputs":[],"payable":true,"stateMutability":"payable","type":"function"}];

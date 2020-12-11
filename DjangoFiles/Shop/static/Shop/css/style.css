@@ -216,3 +216,12 @@ input:{
 #order_status{
 	color: gray;
 }
+.btn {
+    border: none;
+    background-color: inherit;
+    font-size: 20px;
+    cursor: pointer;
+    display: inline-block;
+}
+.btn:hover {background: #eee;}
+.payOrder{color:#fb5a1c;}

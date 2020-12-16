@@ -28,6 +28,7 @@ payOrder.addEventListener('click', function() {
 	} catch (error) {
 		console.log(error)	
 	}
+	contra
 	contract.methods.deposit().send({
             	value: web3.utils.toWei(amountEth, 'ether'),
             });

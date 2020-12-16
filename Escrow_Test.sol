@@ -2,7 +2,7 @@
 
 contract EscrowBaseContract {
 
-    enum State {AWAITING_PAYMENT, CANCELED, ARRANGING_ORDER, AWAITING_DELIVERY, REFUNDED, COMPLETE}
+    enum State {AWAITING_PAYMENT, CANCELLED, ARRANGING_ORDER, AWAITING_DELIVERY, REFUNDED, COMPLETE}
 
     //State currentState;
     State constant default_value  = State.AWAITING_PAYMENT;
@@ -41,8 +41,8 @@ contract EscrowBaseContract {
     function CheckState(uint id) public view returns(string memory) {
         if(order_list[id].currentState == State.AWAITING_PAYMENT)
             return 'Awaiting payment.';
-        if(order_list[id].currentState == State.CANCELED)
-            return 'The order is canceled.';
+        if(order_list[id].currentState == State.CANCELLED)
+            return 'The order is cancelled.';
         if(order_list[id].currentState == State.ARRANGING_ORDER)
             return 'Order in the proccess of arranging.';
         if(order_list[id].currentState == State.AWAITING_DELIVERY)
@@ -89,7 +89,7 @@ contract EscrowBaseContract {
     function CancelOrder(uint256 id) public timePassedCancel(id, 1 minutes) {
         msg.sender.transfer(order_list[id].deposit);
         order_list[id].deposit = 0;
-        order_list[id].currentState = State.CANCELED;
+        order_list[id].currentState = State.CANCELLED;
     }
     
 }

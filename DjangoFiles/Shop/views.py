@@ -14,6 +14,9 @@ class IndexView(View):
         iphones = Product.objects.values()
         context = {'iphones': iphones}
         return render(request, 'Shop/index.html', context = context)
+    
+    def post(selfm, requiest):
+        
 
 class ContactsView(View):
     """
@@ -57,12 +60,12 @@ class LkAdminView(View):
     def get(self, request):
         return render(request, 'Shop/lk_admin.html')
 
-class LkCourierView(View):
+class LkView(View):
     """
     Class for lk_courier.html page
     """
     def get(self, request):
-        return render(request, 'Shop/lk_courier.html')
+        return render(request, 'Shop/lk.html')
 
 class LoginView(View):
     """

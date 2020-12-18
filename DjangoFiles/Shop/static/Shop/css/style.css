@@ -216,17 +216,17 @@ input:{
 #order_status{
 	color: gray;
 }
-.btn, .btn1 {
+.btn, #login_but {
     border: none;
     background-color: inherit;
     font-size: 20px;
     cursor: pointer;
     display: inline-block;
 }
-.btn1{
+#login_but{
 	background-color: #c0c0c0;
 }
-.btn1:hover {background: #9a9a9a;}
+#login_but:hover {background: #9a9a9a;}
 .btn:hover {background: #eee;}
 .payOrder{color:#fb5a1c;}
 .lk_order{

@@ -20,6 +20,13 @@ window.addEventListener('load', function() {
         console.log("done")
         create_post(addr)
     })
+
+	exit_but.addEventListener('click', function() {
+		if (ethereum.isConnected()){
+			disconnect();
+		}
+        console.log("done")
+    	})
     
     function create_post(addr) {
         console.log("create post is working!") // sanity check
@@ -49,14 +56,18 @@ window.addEventListener('load', function() {
             var addr = web3.eth.accounts[0]
             var address = document.getElementById("address");
             address.innerHTML = "Вы вошли под кошельком с адресом: " +addr;
-            // var enter = document.getElementById("login_but");
-            // enter.innerHTML = "Выйти";
-            // enter.id = "exit_but";
+            var enter = document.getElementById("login_but");
+            enter.innerHTML = "Выйти";
+            enter.id = "exit_but";
             return addr;
  		}
 		else{
 	    	document.getElementById("address").innerHTML = "Error";
    		}
+	}
+	
+	function disconnect(){
+		ethereum.on('disconnect', handler: (error: ProviderRpcError) => void);
 	}
 		
 	const elements = document.getElementsByClassName('payOrder');

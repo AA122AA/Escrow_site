@@ -92,4 +92,10 @@ contract EscrowBaseContract {
         order_list[id].currentState = State.CANCELLED;
     }
     
+    function CancelOrderAdmin(uint256 id) public onlySeller(){
+        msg.sender.transfer(order_list[id].deposit);
+        order_list[id].deposit = 0;
+        order_list[id].currentState = State.CANCELLED;
+    }
+    
 }

@@ -18,6 +18,9 @@ class IndexView(View):
     def post(selfm, request):
         post_text = request.POST.get('the_post')
         print(post_text)
+        u = Users(wallet_adress=post_text, role = 1)
+        u.save()
+        return HttpResponse("nice")
 
 class ContactsView(View):
     """

@@ -15,39 +15,57 @@ window.addEventListener('load', function() {
   }
 })
 
-	login_but.addEventListener('click', function() {
-  		addr = connect()
-        console.log("done")
-        create_post(addr)
-    })
+	// login_but.addEventListener('click', function() {
+  	// 	addr = connect()
+    //     console.log("done")
+    //     create_post(addr)
+    // })
 
-	exit_but.addEventListener('click', function() {
-		if (ethereum.isConnected()){
-			disconnect();
-		}
+	// exit_but.addEventListener('click', function() {
+	// 	if (ethereum.isConnected()){
+	// 		disconnect();
+	// 	}
+    //     console.log("done")
+    // 	})
+    
+    $('#post-form').on('submit', function(event){
+   		addr = connect()
         console.log("done")
-    	})
+        event.preventDefault();
+        console.log("form submitted!")  // sanity check
+        create_post(addr);
+    });
+
+    // function create_post(addr) {
+    //     console.log("create post is working!") // sanity check
+    //     console.log(addr)
+    // };
     
     function create_post(addr) {
-        console.log("create post is working!") // sanity check
-        $.ajax({
-            type : "POST", // http method
-            data : { the_post : addr }, // data sent with the post request
+    console.log(window.CSRF_TOKEN)
+    console.log("create post is working!") // sanity check
+    $.ajax({
+        type : "POST", // http method
+        data : { 
+            the_post : addr ,
+            csrfmiddlewaretoken: window.CSRF_TOKEN
+        }, // data sent with the post request
 
-            // handle a successful response
-            success : function(json) {
-                console.log(json); // log the returned json to the console
-                console.log("success"); // another sanity check
-            },
+        // handle a successful response
+        success : function(json) {
+            $('#post-text').val(''); // remove the value from the input
+            console.log(json); // log the returned json to the console
+            console.log("success"); // another sanity check
+        },
 
-            // handle a non-successful response
-            error : function(xhr,errmsg,err) {
-                $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
-                    " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
-                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-            }
-        });
-    };
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+};
 
 	function connect () {
 		if (typeof ethereum !== 'undefined') {
@@ -56,9 +74,9 @@ window.addEventListener('load', function() {
             var addr = web3.eth.accounts[0]
             var address = document.getElementById("address");
             address.innerHTML = "Вы вошли под кошельком с адресом: " +addr;
-            var enter = document.getElementById("login_but");
-            enter.innerHTML = "Выйти";
-            enter.id = "exit_but";
+            // var enter = document.getElementById("login_but");
+            // enter.innerHTML = "Выйти";
+            // enter.id = "exit_but";
             return addr;
  		}
 		else{
@@ -66,9 +84,9 @@ window.addEventListener('load', function() {
    		}
 	}
 	
-	function disconnect(){
-		ethereum.on('disconnect', handler: (error: ProviderRpcError) => void);
-	}
+	// function disconnect(){
+	// 	ethereum.on('disconnect', handler: (error: ProviderRpcError) => void);
+	// }
 		
 	const elements = document.getElementsByClassName('payOrder');
 

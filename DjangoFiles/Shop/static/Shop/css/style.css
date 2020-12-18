@@ -216,13 +216,17 @@ input:{
 #order_status{
 	color: gray;
 }
-.btn {
+.btn, .btn1 {
     border: none;
     background-color: inherit;
     font-size: 20px;
     cursor: pointer;
     display: inline-block;
 }
+.btn1{
+	background-color: #c0c0c0;
+}
+.btn1:hover {background: #9a9a9a;}
 .btn:hover {background: #eee;}
 .payOrder{color:#fb5a1c;}
 .lk_order{
@@ -259,4 +263,8 @@ input:{
 	height: 50px;
 	flex-shrink: 0;
 	margin: auto;
+}
+.lk_staticText{
+	display: flex;
+	justify-content: space-between;
 }

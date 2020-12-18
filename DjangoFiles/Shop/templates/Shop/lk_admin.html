@@ -62,9 +62,27 @@
 	<li class="static">
 			<article class="staticText">
 				<h2>Заказы</h2>
-				<button id="seller_sendForDeliviry">Заказ отправлен в доставку</button>
-				<br>
-				<button id="courier_delivered">Заказ доставлен</button>
+				<div class="lk_order">
+					<div class="lk_order_top">
+						<div class="lk_order_top1">
+							<div class="lk_order_top_left">
+								<span class="order_time">Заказ от </span>
+								<p class="order_id">Номер заказа  </p>
+								<p class="order_product">Товар</p>
+								<p class="order_buyer_address">Адрес кошелька покупателя</p>
+								<p class="order_delivery_address">Адрес доставки</p>
+							</div>
+							<div class="lk_order_top_right">
+								<span class="order_price">120000</span>
+								<p class="order_paid">Оплачен</p>
+							</div>
+						</div>
+					</div>
+					<div class="lk_order_down">
+						<button class="btn send_for_delivery_order">Отправить в доставку</button>
+						<button class="btn delivered_order">Заказ доставлен</button>
+					</div> 
+				</div>
 				
 			</article>
 		</li>

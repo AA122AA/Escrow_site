@@ -15,8 +15,9 @@ class IndexView(View):
         context = {'iphones': iphones}
         return render(request, 'Shop/index.html', context = context)
     
-    def post(selfm, requiest):
-        
+    def post(selfm, request):
+        post_text = request.POST.get('the_post')
+        print(post_text)
 
 class ContactsView(View):
     """

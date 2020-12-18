@@ -16,16 +16,43 @@ window.addEventListener('load', function() {
 })
 
 	login_but.addEventListener('click', function() {
-  		connect()
-		console.log("error")
-	})
+  		addr = connect()
+        console.log("done")
+        create_post(addr)
+    })
+    
+    function create_post(addr) {
+        console.log("create post is working!") // sanity check
+        $.ajax({
+            type : "POST", // http method
+            data : { the_post : addr }, // data sent with the post request
+
+            // handle a successful response
+            success : function(json) {
+                console.log(json); // log the returned json to the console
+                console.log("success"); // another sanity check
+            },
+
+            // handle a non-successful response
+            error : function(xhr,errmsg,err) {
+                $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                    " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+        });
+    };
 
 	function connect () {
 		if (typeof ethereum !== 'undefined') {
    			ethereum.enable()
    			.catch(console.error)
-			var addr = web3.eth.accounts[0]
-  			document.getElementById("address").innerHTML=addr;
+            var addr = web3.eth.accounts[0]
+            var address = document.getElementById("address");
+            address.innerHTML = "Вы вошли под кошельком с адресом: " +addr;
+            // var enter = document.getElementById("login_but");
+            // enter.innerHTML = "Выйти";
+            // enter.id = "exit_but";
+            return addr;
  		}
 		else{
 	    	document.getElementById("address").innerHTML = "Error";

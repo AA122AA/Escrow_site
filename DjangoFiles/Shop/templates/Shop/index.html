@@ -33,6 +33,7 @@
 			</span>
 			<br>
 			<div class="guest_login">
+				{% csrf_token %}
 				<h3><button id="login_but">Войти</button></h3>
 			</div>
 		</div>
@@ -40,7 +41,7 @@
 </div>
 	
 <div class="account_info">
-	<p class="address_account">Вы не зашли на сайт со своего кошелька</p>
+	<p id="address" class="address_account">Вы не зашли на сайт со своего кошелька</p>
 </div>	
 	
 <header class="header">

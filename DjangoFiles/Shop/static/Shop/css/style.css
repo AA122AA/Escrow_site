@@ -229,14 +229,14 @@ input:{
 #order_status{
 	color: gray;
 }
-.btn, #login_but {
+.btn, #login_but, #exit_but {
     border: none;
     background-color: inherit;
     font-size: 20px;
     cursor: pointer;
     display: inline-block;
 }
-#login_but{
+#login_but, #exit_but{
 	background-color: #c0c0c0;
 }
 #login_but:hover {background: #9a9a9a;}

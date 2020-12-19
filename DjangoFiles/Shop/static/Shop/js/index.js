@@ -13,7 +13,43 @@ window.addEventListener('load', function () {
             console.log("Вы не подключены к сети Ropsten");
         }
     }
+    cookie = getCookie('address');
+    if (cookie !== "undefined") {
+        addr = cookie;
+        show_address(addr);
+        }
 })
+        
+function getCookie(name) {
+  let matches = document.cookie.match(new RegExp(
+    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+  ));
+  return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+
+function setCookie(name, value, options = {}) {
+    options = {
+        path: '/',
+        max-age=7200,
+        ...options
+    };
+
+  if (options.expires instanceof Date) {
+    options.expires = options.expires.toUTCString();
+  }
+
+  let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+
+  for (let optionKey in options) {
+    updatedCookie += "; " + optionKey;
+    let optionValue = options[optionKey];
+    if (optionValue !== true) {
+      updatedCookie += "=" + optionValue;
+    }
+  }
+
+  document.cookie = updatedCookie;
+}
 
 $('#post-form').on('submit', function (event) {
     let addr = connect()
@@ -37,6 +73,7 @@ function connect() {
     if (typeof ethereum !== 'undefined') {
         ethereum.enable().catch(console.error);
         let addr = web3.eth.accounts[0];
+        setCookie('user', encodeURIComponent(addr), {secure: true});
         return addr;
     } else {
         document.getElementById("address").innerHTML = "Error";

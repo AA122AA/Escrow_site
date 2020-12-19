@@ -15,11 +15,18 @@ class IndexView(View):
         context = {'iphones': iphones}
         return render(request, 'Shop/index.html', context = context)
     
-    def post(selfm, request):
+    def post(self, request):
+        print(request.POST)
         post_text = request.POST.get('the_post')
         print(post_text)
-        u = Users(wallet_adress=post_text, role = 1)
-        u.save()
+        if post_text != None:
+            u = Users(wallet_address=post_text, role = 1)
+            users = Users.objects.all()
+            for user in users:
+                if u.wallet_address != user.wallet_address:
+                    u.save()
+        else:
+            print("undefined address")
         return HttpResponse("nice")
 
 class ContactsView(View):

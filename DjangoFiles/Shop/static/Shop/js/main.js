@@ -15,80 +15,60 @@ window.addEventListener('load', function() {
   }
 })
 
-	// login_but.addEventListener('click', function() {
-  	// 	addr = connect()
-    //     console.log("done")
-    //     create_post(addr)
-    // })
-
-	// exit_but.addEventListener('click', function() {
-	// 	if (ethereum.isConnected()){
-	// 		disconnect();
-	// 	}
-    //     console.log("done")
-    // 	})
-    
     $('#post-form').on('submit', function(event){
-   		addr = connect()
+        addr = connect()
+        show_address(addr)   
         console.log("done")
         event.preventDefault();
         console.log("form submitted!")  // sanity check
-        create_post(addr);
+        add_user(addr);
     });
-
-    // function create_post(addr) {
-    //     console.log("create post is working!") // sanity check
-    //     console.log(addr)
-    // };
     
-    function create_post(addr) {
-    console.log(window.CSRF_TOKEN)
-    console.log("create post is working!") // sanity check
-    $.ajax({
-        type : "POST", // http method
-        data : { 
-            the_post : addr ,
-            csrfmiddlewaretoken: window.CSRF_TOKEN
-        }, // data sent with the post request
-
-        // handle a successful response
-        success : function(json) {
-            $('#post-text').val(''); // remove the value from the input
-            console.log(json); // log the returned json to the console
-            console.log("success"); // another sanity check
-        },
-
-        // handle a non-successful response
-        error : function(xhr,errmsg,err) {
-            $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
-                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
-            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+    function show_address(addr) {
+        var address = document.getElementById("address");
+        if (typeof addr !== 'undefined'){
+            address.innerHTML = "Вы вошли под кошельком с адресом: " + addr;
         }
-    });
-};
+        else{
+            address.innerHTML = "Нажмите на кнопку входа еще раз";
+        }
+    }
+
+    function add_user(addr) {
+        console.log("create post is working!") // sanity check
+        $.ajax({
+            type : "POST", // http method
+            data : { 
+                the_post : addr ,
+                csrfmiddlewaretoken: window.CSRF_TOKEN
+            }, // data sent with the post request
+
+            // handle a successful response
+            success : function(json) {
+                $('#post-text').val(''); // remove the value from the input
+                console.log(json); // log the returned json to the console
+                console.log("success"); // another sanity check
+            },
+
+            // handle a non-successful response
+            error : function(xhr,errmsg,err) {
+                $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                    " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+        });
+    };
 
 	function connect () {
 		if (typeof ethereum !== 'undefined') {
-   			ethereum.enable()
-   			.catch(console.error)
-            var addr = web3.eth.accounts[0]
-            var address = document.getElementById("address");
-            address.innerHTML = "Вы вошли под кошельком с адресом: " +addr;
-            // var enter = document.getElementById("login_but");
-            // enter.innerHTML = "Выйти";
-            // enter.id = "exit_but";
+   			ethereum.enable().catch(console.error);
+            var addr = web3.eth.accounts[0];
             return addr;
  		}
 		else{
 	    	document.getElementById("address").innerHTML = "Error";
    		}
 	}
-	
-	// function disconnect(){
-	// 	ethereum.on('disconnect', handler: (error: ProviderRpcError) => void);
-	// }
-		
-	const elements = document.getElementsByClassName('payOrder');
 
 	function initContract(){
 		const abi=[{"constant":true,"inputs":[{"name":"id","type":"uint256"}],"name":"CheckState","outputs":[{"name":"currentState","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"id","type":"uint256"}],"name":"Refund","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"id","type":"uint256"}],"name":"delivered","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"order_list","outputs":[{"name":"buyer","type":"address"},{"name":"deposit","type":"uint256"},{"name":"currentState","type":"uint8"},{"name":"OrderTime","type":"uint32"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"deposit","outputs":[],"payable":true,"stateMutability":"payable","type":"function"}];
@@ -117,4 +97,30 @@ window.addEventListener('load', function() {
          		else
              		console.error(error);
     		});
-	}
+    }
+
+    function change_product(addr) {
+        console.log("create post is working!") // sanity check
+        $.ajax({
+            type : "POST", // http method
+            data : { 
+                the_post : addr ,
+                csrfmiddlewaretoken: window.CSRF_TOKEN
+            }, // data sent with the post request
+
+            // handle a successful response
+            success : function(json) {
+                $('#post-text').val(''); // remove the value from the input
+                console.log(json); // log the returned json to the console
+                console.log("success"); // another sanity check
+            },
+
+            // handle a non-successful response
+            error : function(xhr,errmsg,err) {
+                $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                    " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+        });
+    };
+

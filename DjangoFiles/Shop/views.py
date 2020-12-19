@@ -18,13 +18,20 @@ class IndexView(View):
     def post(self, request):
         if request.POST.get('action') == "add_user":
             post_text = request.POST.get('the_post')
-            print(post_text)
+            print(post_text + "post text")
             if post_text != None:
                 u = Users(wallet_address=post_text, role = 1)
+                print(u)
                 users = Users.objects.all()
-                for user in users:
-                    if u.wallet_address != user.wallet_address:
-                        u.save()
+                print(users.count(), "users print")
+                if users.count() != 0:
+                    for user in users:
+                        print("in for")
+                        print(user.wallet_address, "user.wallet_address")
+                        if u.wallet_address != user.wallet_address:
+                            u.save()
+                else:
+                    u.save()
             else:
                 print("undefined address")
             return HttpResponse("nice")
@@ -38,13 +45,17 @@ class ContactsView(View):
     def get(self, request):
         return render(request, 'Shop/contacts.html')
     def post(self, request):
+        print(request.POST.get('action'))
         if request.POST.get('action') == "add_user":
             post_text = request.POST.get('the_post')
-            print(post_text)
+            print(post_text + "post  tet")
             if post_text != None:
                 u = Users(wallet_address=post_text, role = 1)
+                print(u)
                 users = Users.objects.all()
+                print(users)
                 for user in users:
+                    print(user.wallet_address)
                     if u.wallet_address != user.wallet_address:
                         u.save()
             else:

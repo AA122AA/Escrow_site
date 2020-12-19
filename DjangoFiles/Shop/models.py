@@ -27,5 +27,5 @@ class Users(models.Model):
     wallet_address = models.CharField(max_length=200, unique=True)
     role = models.IntegerField(default=1)
     def __str__(self):
-        return self.wallet_adress
+        return self.wallet_address
 

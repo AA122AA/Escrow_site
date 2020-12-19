@@ -140,51 +140,17 @@ function add_user(addr) {
 
 function initContract() {
     const abi = [{
-        "constant": true,
-        "inputs": [{"name": "id", "type": "uint256"}],
-        "name": "CheckState",
-        "outputs": [{"name": "currentState", "type": "uint8"}],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    }, {
-        "constant": false,
-        "inputs": [{"name": "id", "type": "uint256"}],
-        "name": "Refund",
-        "outputs": [],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-    }, {
-        "constant": false,
-        "inputs": [{"name": "id", "type": "uint256"}],
-        "name": "delivered",
-        "outputs": [],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-    }, {
-        "constant": true,
-        "inputs": [{"name": "", "type": "uint256"}],
-        "name": "order_list",
-        "outputs": [{"name": "buyer", "type": "address"}, {
-            "name": "deposit",
-            "type": "uint256"
-        }, {"name": "currentState", "type": "uint8"}, {"name": "OrderTime", "type": "uint32"}],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    }, {
-        "constant": false,
-        "inputs": [],
-        "name": "deposit",
-        "outputs": [],
-        "payable": true,
-        "stateMutability": "payable",
-        "type": "function"
-    }];
+        "constant":true,
+        "inputs":[{"name":"id","type":"uint256"}],
+        "name":"CheckState",
+        "outputs":[{"name":"","type":"string"}],
+        "payable":false,
+        "stateMutability":"view",
+        "type":"function"
+    },{
+        "constant":false,"inputs":[{"name":"id","type":"uint256"}],"name":"Refund","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"id","type":"uint256"}],"name":"delivered","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"id","type":"uint256"}],"name":"CancelOrder","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"id","type":"uint256"}],"name":"CancelOrderAdmin","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"id","type":"uint256"}],"name":"OrderArranged","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"id","type":"uint256"}],"name":"getOrder","outputs":[{"name":"buyer","type":"address"},{"name":"deposit","type":"uint256"},{"name":"currentState","type":"uint8"},{"name":"OrderTime","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"deposit","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[{"name":"buyer","type":"address"}],"name":"getIDs","outputs":[{"name":"","type":"uint256[]"}],"payable":false,"stateMutability":"view","type":"function"}]
     const contract_Address = {
-        "3": "0x4b41F4A10BB68Df8890B789273666bA2EDe0c2F8"
+        "3": "0x50943D5E5214A5f0CdC1802b0797d73BEcD9601d"
     }
     try {
         var current_network = web3.version.network;

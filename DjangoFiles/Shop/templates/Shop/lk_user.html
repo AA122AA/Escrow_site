@@ -67,30 +67,28 @@
 	<li class="static">
 			<article class="staticText">
 				<h2>Ваши заказы</h2>
-				<div class="lk_order">
-					<div class="lk_order_top">
-						<div class="lk_order_top1">
-							<div class="lk_order_top_left">
-								<span class="order_time">Заказ от </span>
-								<p class="order_id">Номер заказа  </p>
-								<p class="order_product">Товар</p>
-								<p class="order_delivery_address">Адрес доставки  </p>
-							</div>
-							<div class="lk_order_top_right">
-								<span class="order_price">120000</span>
-								<p class="order_state">Оплачен</p>
+				<template id="order_users">
+					<div class="lk_order">
+						<div class="lk_order_top">
+							<div class="lk_order_top1">
+								<div class="lk_order_top_left">
+									<span class="order_time">Заказ от </span>
+									<p class="order_id">Номер заказа  </p>
+									<p class="order_product">Товар</p>
+									<p class="order_delivery_address">Адрес доставки  </p>
+								</div>
+								<div class="lk_order_top_right">
+									<span class="order_price">120000</span>
+									<p class="order_state">Оплачен</p>
+								</div>
 							</div>
 						</div>
+						<div class="lk_order_down">
+							<button class="btn cancel_buyer_order">Отменить заказ</button>
+							<button class="btn refund_order">Заказ не пришел спустя 2 месяца после доставки</button>
+						</div> 
 					</div>
-					<div class="lk_order_down">
-						<button class="btn cancel_buyer_order">Отменить заказ</button>
-						<button class="btn refund_order">Заказ не пришел спустя 2 месяца после доставки</button>
-					</div> 
-				</div>
-				<br>
-				<br>
-				<br>
-				<br>
+				</template>
 			</article>
 		</li>
 	</ul>

@@ -41,7 +41,7 @@ contract EscrowBaseContract {
         return (order_list[id].buyer, order_list[id].deposit, order_list[id].currentState, order_list[id].OrderTime); 
     }    
     
-    function getID(address buyer) public view returns(uint256[] memory){
+    function getIDs(address buyer) public view returns(uint256[] memory){
         return buyer_orders[buyer];
     }
     

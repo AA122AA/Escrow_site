@@ -1,4 +1,4 @@
- pragma solidity 0.5.1;
+ pragma solidity ^0.5.3;
 
 contract EscrowBaseContract {
 
@@ -16,6 +16,7 @@ contract EscrowBaseContract {
     
     address payable constant seller = 0x7662aE8Cd04DB7B568acA1a364b43Add9d3294b7; 
     uint256 OrderCount;
+    mapping(address => uint[]) buyer_orders;
     mapping(uint => Order) order_list;
     modifier onlySeller(){require(msg.sender == seller); _;}
     //modifier inState(State expectedState, uint id){require(order_list[id].currentState == expectedState); _;}
@@ -40,6 +41,10 @@ contract EscrowBaseContract {
         return (order_list[id].buyer, order_list[id].deposit, order_list[id].currentState, order_list[id].OrderTime); 
     }    
     
+    function getID(address buyer) public view returns(uint256[] memory){
+        return buyer_orders[buyer];
+    }
+    
     function CheckState(uint id) public view returns(string memory) {
         if(order_list[id].currentState == State.AWAITING_PAYMENT)
             return 'Awaiting payment.';
@@ -61,6 +66,7 @@ contract EscrowBaseContract {
         order_list[OrderCount].deposit = order_list[OrderCount].deposit + amount;
         order_list[OrderCount].currentState = State.ARRANGING_ORDER;
         order_list[OrderCount].OrderTime = now;
+        buyer_orders[msg.sender].push(OrderCount);
     }
 
     function OrderArranged(uint256 id) public onlySeller() {

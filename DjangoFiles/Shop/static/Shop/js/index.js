@@ -1,3 +1,4 @@
+const admin = "0x0667FA2A9dDF39d6921373FFA82E4a48C31b2a97";
 window.addEventListener('load', function () {
     // Checking if Web3 has been injected by the browser (Mist/MetaMask)
     if (typeof web3 !== 'undefined') {
@@ -18,20 +19,22 @@ window.addEventListener('load', function () {
     if (cookie !== "undefined") {
         addr = cookie;
         show_address(addr);
-        if (addr === "0x0667FA2A9dDF39d6921373FFA82E4a48C31b2a97"){
+        if (addr == admin.toLowerCase()){
             changeURLadmin();
         }
-        changeURLUser();
-   }
+        else{
+            changeURLUser();
+        }
+    }
 })
 
 function changeURLadmin(){
-	var lk = document.getElementByClassName('lk')
-	lk.href="{% url 'lk_admin' %}";
+	var lk = document.getElementById('lk')
+	lk.href='lk_admin';
 }
 function changeURLUser(){
-	var lk = document.getElementByClassName('lk')
-	lk.href="{% url 'lk_user' %}";
+	var lk = document.getElementById('lk')
+	lk.href='lk_user';
 }
 
 function getCookie(name) {

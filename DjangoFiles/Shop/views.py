@@ -24,12 +24,13 @@ class IndexView(View):
                 print(u)
                 users = Users.objects.all()
                 print(users.count(), "users print")
+                isHere = False
                 if users.count() != 0:
                     for user in users:
-                        print("in for")
-                        print(user.wallet_address, "user.wallet_address")
-                        if u.wallet_address != user.wallet_address:
-                            u.save()
+                        if u.wallet_address == user.wallet_address:
+                            isHere = True
+                    if not isHere:
+                        u.save()
                 else:
                     u.save()
             else:

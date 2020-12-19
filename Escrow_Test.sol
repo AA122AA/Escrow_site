@@ -36,7 +36,9 @@ contract EscrowBaseContract {
         _; 
     }
     
-    
+    function getOrder(uint id) public view returns(address buyer, uint256 deposit, State currentState, uint256 OrderTime){
+        return (order_list[id].buyer, order_list[id].deposit, order_list[id].currentState, order_list[id].OrderTime); 
+    }    
     
     function CheckState(uint id) public view returns(string memory) {
         if(order_list[id].currentState == State.AWAITING_PAYMENT)
@@ -52,10 +54,6 @@ contract EscrowBaseContract {
         else return 'Refunded.';
     }
     
-    function _getState(uint id) external view returns(State currentState) {
-        return order_list[id].currentState;
-    }
- 
     function deposit() public payable {
         uint256 amount = msg.value;
         OrderCount+=1;

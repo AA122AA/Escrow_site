@@ -16,7 +16,7 @@ contract EscrowBaseContract {
     
     address payable constant seller = 0x7662aE8Cd04DB7B568acA1a364b43Add9d3294b7; 
     uint256 OrderCount;
-    mapping(uint => Order) public order_list;
+    mapping(uint => Order) order_list;
     modifier onlySeller(){require(msg.sender == seller); _;}
     //modifier inState(State expectedState, uint id){require(order_list[id].currentState == expectedState); _;}
     

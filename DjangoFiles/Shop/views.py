@@ -16,18 +16,20 @@ class IndexView(View):
         return render(request, 'Shop/index.html', context = context)
     
     def post(self, request):
-        print(request.POST)
-        post_text = request.POST.get('the_post')
-        print(post_text)
-        if post_text != None:
-            u = Users(wallet_address=post_text, role = 1)
-            users = Users.objects.all()
-            for user in users:
-                if u.wallet_address != user.wallet_address:
-                    u.save()
-        else:
-            print("undefined address")
-        return HttpResponse("nice")
+        if request.POST.get('action') == "add_user":
+            post_text = request.POST.get('the_post')
+            print(post_text)
+            if post_text != None:
+                u = Users(wallet_address=post_text, role = 1)
+                users = Users.objects.all()
+                for user in users:
+                    if u.wallet_address != user.wallet_address:
+                        u.save()
+            else:
+                print("undefined address")
+            return HttpResponse("nice")
+        elif request.POST.get('action') == "change_product":
+            pass
 
 class ContactsView(View):
     """

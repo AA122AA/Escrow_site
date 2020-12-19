@@ -50,7 +50,8 @@ function add_user(addr) {
         type: "POST", // http method
         data: {
             the_post: addr,
-            csrfmiddlewaretoken: window.CSRF_TOKEN
+            csrfmiddlewaretoken: window.CSRF_TOKEN,
+            action: "add_user"
         }, // data sent with the post request
 
         // handle a successful response
@@ -146,8 +147,9 @@ function change_product(addr) {
     $.ajax({
         type: "POST", // http method
         data: {
-            the_post: addr,
-            csrfmiddlewaretoken: window.CSRF_TOKEN
+            the_post: "-1",
+            csrfmiddlewaretoken: window.CSRF_TOKEN,
+            action: "change_product"
         }, // data sent with the post request
 
         // handle a successful response

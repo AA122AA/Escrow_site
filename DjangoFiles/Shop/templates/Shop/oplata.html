@@ -31,7 +31,10 @@
 			</span>
 			<br>
 			<<div class="guest_login">
-				<h3><button id="login_but">Войти</button></h3>
+				<form method="POST" id="post-form">
+					{% csrf_token %}
+					<h3><input type="submit" value="Войти" id="login_but"></h3>
+				</form>
 			</div>
 		</div>
 	</div>

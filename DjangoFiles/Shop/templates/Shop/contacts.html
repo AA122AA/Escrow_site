@@ -77,5 +77,10 @@
 			</article>
 		</li>
 	</ul>
+	<script type="text/javascript" >
+		window.CSRF_TOKEN = "{{ csrf_token }}";
+  	</script>
+	<script type="text/javascript" src="{% static 'Shop/js/login.js'%}">
+  	</script>
 </body>
 </html>

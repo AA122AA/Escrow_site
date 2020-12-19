@@ -18,12 +18,9 @@ class IndexView(View):
     def post(self, request):
         if request.POST.get('action') == "add_user":
             post_text = request.POST.get('the_post')
-            print(post_text + "post text")
             if post_text != None:
                 u = Users(wallet_address=post_text, role = 1)
-                print(u)
                 users = Users.objects.all()
-                print(users.count(), "users print")
                 isHere = False
                 if users.count() != 0:
                     for user in users:
@@ -45,24 +42,26 @@ class ContactsView(View):
     """
     def get(self, request):
         return render(request, 'Shop/contacts.html')
+
     def post(self, request):
-        print(request.POST.get('action'))
         if request.POST.get('action') == "add_user":
             post_text = request.POST.get('the_post')
-            print(post_text + "post  tet")
             if post_text != None:
                 u = Users(wallet_address=post_text, role = 1)
-                print(u)
                 users = Users.objects.all()
-                print(users)
-                for user in users:
-                    print(user.wallet_address)
-                    if u.wallet_address != user.wallet_address:
+                isHere = False
+                if users.count() != 0:
+                    for user in users:
+                        if u.wallet_address == user.wallet_address:
+                            isHere = True
+                    if not isHere:
                         u.save()
+                else:
+                    u.save()
             else:
                 print("undefined address")
             return HttpResponse("nice")
- 
+
 class DostavkaView(View):
     """
     Class for dostavka.html page
@@ -73,17 +72,22 @@ class DostavkaView(View):
     def post(self, request):
         if request.POST.get('action') == "add_user":
             post_text = request.POST.get('the_post')
-            print(post_text)
             if post_text != None:
                 u = Users(wallet_address=post_text, role = 1)
                 users = Users.objects.all()
-                for user in users:
-                    if u.wallet_address != user.wallet_address:
+                isHere = False
+                if users.count() != 0:
+                    for user in users:
+                        if u.wallet_address == user.wallet_address:
+                            isHere = True
+                    if not isHere:
                         u.save()
+                else:
+                    u.save()
             else:
                 print("undefined address")
             return HttpResponse("nice")
- 
+
 class OplataView(View):
     """
     Class for oplata.html page
@@ -94,17 +98,22 @@ class OplataView(View):
     def post(self, request):
         if request.POST.get('action') == "add_user":
             post_text = request.POST.get('the_post')
-            print(post_text)
             if post_text != None:
                 u = Users(wallet_address=post_text, role = 1)
                 users = Users.objects.all()
-                for user in users:
-                    if u.wallet_address != user.wallet_address:
+                isHere = False
+                if users.count() != 0:
+                    for user in users:
+                        if u.wallet_address == user.wallet_address:
+                            isHere = True
+                    if not isHere:
                         u.save()
+                else:
+                    u.save()
             else:
                 print("undefined address")
             return HttpResponse("nice")
- 
+
 class GarantyView(View):
     """
     Class for garanty.html page
@@ -115,17 +124,22 @@ class GarantyView(View):
     def post(self, request):
         if request.POST.get('action') == "add_user":
             post_text = request.POST.get('the_post')
-            print(post_text)
             if post_text != None:
                 u = Users(wallet_address=post_text, role = 1)
                 users = Users.objects.all()
-                for user in users:
-                    if u.wallet_address != user.wallet_address:
+                isHere = False
+                if users.count() != 0:
+                    for user in users:
+                        if u.wallet_address == user.wallet_address:
+                            isHere = True
+                    if not isHere:
                         u.save()
+                else:
+                    u.save()
             else:
                 print("undefined address")
             return HttpResponse("nice")
- 
+
 class LkUserView(View):
     """
     Class for lk_user.html page
@@ -136,17 +150,22 @@ class LkUserView(View):
     def post(self, request):
         if request.POST.get('action') == "add_user":
             post_text = request.POST.get('the_post')
-            print(post_text)
             if post_text != None:
                 u = Users(wallet_address=post_text, role = 1)
                 users = Users.objects.all()
-                for user in users:
-                    if u.wallet_address != user.wallet_address:
+                isHere = False
+                if users.count() != 0:
+                    for user in users:
+                        if u.wallet_address == user.wallet_address:
+                            isHere = True
+                    if not isHere:
                         u.save()
+                else:
+                    u.save()
             else:
                 print("undefined address")
             return HttpResponse("nice")
- 
+
 class LkAdminView(View):
     """
     Class for lk_admin.html page
@@ -157,17 +176,22 @@ class LkAdminView(View):
     def post(self, request):
         if request.POST.get('action') == "add_user":
             post_text = request.POST.get('the_post')
-            print(post_text)
             if post_text != None:
                 u = Users(wallet_address=post_text, role = 1)
                 users = Users.objects.all()
-                for user in users:
-                    if u.wallet_address != user.wallet_address:
+                isHere = False
+                if users.count() != 0:
+                    for user in users:
+                        if u.wallet_address == user.wallet_address:
+                            isHere = True
+                    if not isHere:
                         u.save()
+                else:
+                    u.save()
             else:
                 print("undefined address")
             return HttpResponse("nice")
- 
+
 class LkView(View):
     """
     Class for lk_courier.html page
@@ -178,14 +202,18 @@ class LkView(View):
     def post(self, request):
         if request.POST.get('action') == "add_user":
             post_text = request.POST.get('the_post')
-            print(post_text)
             if post_text != None:
                 u = Users(wallet_address=post_text, role = 1)
                 users = Users.objects.all()
-                for user in users:
-                    if u.wallet_address != user.wallet_address:
+                isHere = False
+                if users.count() != 0:
+                    for user in users:
+                        if u.wallet_address == user.wallet_address:
+                            isHere = True
+                    if not isHere:
                         u.save()
+                else:
+                    u.save()
             else:
                 print("undefined address")
             return HttpResponse("nice")
- 

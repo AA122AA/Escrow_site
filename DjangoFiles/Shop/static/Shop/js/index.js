@@ -17,9 +17,22 @@ window.addEventListener('load', function () {
     if (cookie !== "undefined") {
         addr = cookie;
         show_address(addr);
+        if (addr === "0x0667FA2A9dDF39d6921373FFA82E4a48C31b2a97"){
+            changeURLadmin();
         }
+        changeURLUser();
+   }
 })
-        
+
+function changeURLadmin(){
+	var lk = document.getElementByClassName('lk')
+	lk.href="{% url 'lk_admin' %}";
+}
+function changeURLUser(){
+	var lk = document.getElementByClassName('lk')
+	lk.href="{% url 'lk_user' %}";
+}
+
 function getCookie(name) {
   let matches = document.cookie.match(new RegExp(
     "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"

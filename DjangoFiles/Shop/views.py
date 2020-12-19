@@ -37,7 +37,20 @@ class ContactsView(View):
     """
     def get(self, request):
         return render(request, 'Shop/contacts.html')
-
+    def post(self, request):
+        if request.POST.get('action') == "add_user":
+            post_text = request.POST.get('the_post')
+            print(post_text)
+            if post_text != None:
+                u = Users(wallet_address=post_text, role = 1)
+                users = Users.objects.all()
+                for user in users:
+                    if u.wallet_address != user.wallet_address:
+                        u.save()
+            else:
+                print("undefined address")
+            return HttpResponse("nice")
+ 
 class DostavkaView(View):
     """
     Class for dostavka.html page
@@ -45,6 +58,20 @@ class DostavkaView(View):
     def get(self, request):
         return render(request, 'Shop/dostavka.html')
 
+    def post(self, request):
+        if request.POST.get('action') == "add_user":
+            post_text = request.POST.get('the_post')
+            print(post_text)
+            if post_text != None:
+                u = Users(wallet_address=post_text, role = 1)
+                users = Users.objects.all()
+                for user in users:
+                    if u.wallet_address != user.wallet_address:
+                        u.save()
+            else:
+                print("undefined address")
+            return HttpResponse("nice")
+ 
 class OplataView(View):
     """
     Class for oplata.html page
@@ -52,6 +79,20 @@ class OplataView(View):
     def get(self, request):
         return render(request, 'Shop/oplata.html')
 
+    def post(self, request):
+        if request.POST.get('action') == "add_user":
+            post_text = request.POST.get('the_post')
+            print(post_text)
+            if post_text != None:
+                u = Users(wallet_address=post_text, role = 1)
+                users = Users.objects.all()
+                for user in users:
+                    if u.wallet_address != user.wallet_address:
+                        u.save()
+            else:
+                print("undefined address")
+            return HttpResponse("nice")
+ 
 class GarantyView(View):
     """
     Class for garanty.html page
@@ -59,6 +100,20 @@ class GarantyView(View):
     def get(self, request):
         return render(request, 'Shop/garanty.html')
 
+    def post(self, request):
+        if request.POST.get('action') == "add_user":
+            post_text = request.POST.get('the_post')
+            print(post_text)
+            if post_text != None:
+                u = Users(wallet_address=post_text, role = 1)
+                users = Users.objects.all()
+                for user in users:
+                    if u.wallet_address != user.wallet_address:
+                        u.save()
+            else:
+                print("undefined address")
+            return HttpResponse("nice")
+ 
 class LkUserView(View):
     """
     Class for lk_user.html page
@@ -66,6 +121,20 @@ class LkUserView(View):
     def get(self, request):
         return render(request, 'Shop/lk_user.html')
 
+    def post(self, request):
+        if request.POST.get('action') == "add_user":
+            post_text = request.POST.get('the_post')
+            print(post_text)
+            if post_text != None:
+                u = Users(wallet_address=post_text, role = 1)
+                users = Users.objects.all()
+                for user in users:
+                    if u.wallet_address != user.wallet_address:
+                        u.save()
+            else:
+                print("undefined address")
+            return HttpResponse("nice")
+ 
 class LkAdminView(View):
     """
     Class for lk_admin.html page
@@ -73,6 +142,20 @@ class LkAdminView(View):
     def get(self, request):
         return render(request, 'Shop/lk_admin.html')
 
+    def post(self, request):
+        if request.POST.get('action') == "add_user":
+            post_text = request.POST.get('the_post')
+            print(post_text)
+            if post_text != None:
+                u = Users(wallet_address=post_text, role = 1)
+                users = Users.objects.all()
+                for user in users:
+                    if u.wallet_address != user.wallet_address:
+                        u.save()
+            else:
+                print("undefined address")
+            return HttpResponse("nice")
+ 
 class LkView(View):
     """
     Class for lk_courier.html page
@@ -80,16 +163,17 @@ class LkView(View):
     def get(self, request):
         return render(request, 'Shop/lk.html')
 
-class LoginView(View):
-    """
-    Class for login.html page
-    """
-    def get(self, request):
-        return render(request, 'Shop/login.html')
-        
-class RegistrView(View):
-    """
-    Class for registration.html page
-    """
-    def get(self, request):
-        return render(request, 'Shop/registration.html')
+    def post(self, request):
+        if request.POST.get('action') == "add_user":
+            post_text = request.POST.get('the_post')
+            print(post_text)
+            if post_text != None:
+                u = Users(wallet_address=post_text, role = 1)
+                users = Users.objects.all()
+                for user in users:
+                    if u.wallet_address != user.wallet_address:
+                        u.save()
+            else:
+                print("undefined address")
+            return HttpResponse("nice")
+ 

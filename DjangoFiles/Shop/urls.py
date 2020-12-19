@@ -11,6 +11,4 @@ urlpatterns = [
     path('lk_admin', views.LkAdminView.as_view(), name='lk_admin'),
     path('lk', views.LkView.as_view(), name='lk'),
     path('contacts', views.ContactsView.as_view(), name='contacts'),
-    path('login', views.LoginView.as_view(), name='login'),
-    path('registration', views.RegistrView.as_view(), name='registr'),
 ]

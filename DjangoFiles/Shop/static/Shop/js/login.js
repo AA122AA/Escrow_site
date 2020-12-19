@@ -13,7 +13,42 @@ window.addEventListener('load', function () {
             console.log("Вы не подключены к сети Ropsten");
         }
     }
+    let cookie = getCookie('address');
+    console.log(cookie)
+    if (cookie !== "undefined") {
+        addr = cookie;
+        show_address(addr);
+        }
 })
+        
+function getCookie(name) {
+  let matches = document.cookie.match(new RegExp(
+    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+  ));
+  return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+
+function setCookie(name, value, options = {}) {
+    options = {
+        path: '/'
+    };
+
+  if (options.expires instanceof Date) {
+    options.expires = options.expires.toUTCString();
+  }
+
+  let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+
+  for (let optionKey in options) {
+    updatedCookie += "; " + optionKey;
+    let optionValue = options[optionKey];
+    if (optionValue !== true) {
+      updatedCookie += "=" + optionValue;
+    }
+  }
+
+  document.cookie = updatedCookie;
+}
 
 $('#post-form').on('submit', function (event) {
     let addr = connect()
@@ -33,10 +68,11 @@ function show_address(addr) {
     }
 }
 
-export function connect() {
+function connect() {
     if (typeof ethereum !== 'undefined') {
         ethereum.enable().catch(console.error);
         let addr = web3.eth.accounts[0];
+        setCookie('address', encodeURIComponent(addr), {secure: true, 'max-age': 3600});
         return addr;
     } else {
         document.getElementById("address").innerHTML = "Error";
@@ -50,7 +86,8 @@ function add_user(addr) {
         type: "POST", // http method
         data: {
             the_post: addr,
-            csrfmiddlewaretoken: window.CSRF_TOKEN
+            csrfmiddlewaretoken: window.CSRF_TOKEN,
+            action: "add_user"
         }, // data sent with the post request
 
         // handle a successful response

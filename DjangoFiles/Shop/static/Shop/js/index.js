@@ -13,7 +13,8 @@ window.addEventListener('load', function () {
             console.log("Вы не подключены к сети Ropsten");
         }
     }
-    cookie = getCookie('address');
+    let cookie = getCookie('address');
+    console.log(cookie)
     if (cookie !== "undefined") {
         addr = cookie;
         show_address(addr);
@@ -29,9 +30,7 @@ function getCookie(name) {
 
 function setCookie(name, value, options = {}) {
     options = {
-        path: '/',
-        max-age=7200,
-        ...options
+        path: '/'
     };
 
   if (options.expires instanceof Date) {
@@ -73,7 +72,7 @@ function connect() {
     if (typeof ethereum !== 'undefined') {
         ethereum.enable().catch(console.error);
         let addr = web3.eth.accounts[0];
-        setCookie('user', encodeURIComponent(addr), {secure: true});
+        setCookie('address', encodeURIComponent(addr), {secure: true, 'max-age': 3600});
         return addr;
     } else {
         document.getElementById("address").innerHTML = "Error";

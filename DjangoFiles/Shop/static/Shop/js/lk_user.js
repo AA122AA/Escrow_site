@@ -320,12 +320,12 @@ function showOrder(Order, id) {
     order_state.innerHTML = "Статус заказа: " + status;
 	
     order_time.removeAttribute('id');
-    order_id.id = "order_id_"+orderId;
+    order_id.removeAttribute('id');
     order_price.removeAttribute('id');
     order_state.removeAttribute('id');
-    order_cancel_button.onclick = orderId;
+    order_cancel_button.setAttribute('onclick', 'cancelOrder_user(' + orderId + ')');
     order_cancel_button.removeAttribute('id');
-    order_refund_button.onclick = orderId;
+    order_refund_button.setAttribute('onclick', 'refundOrder_user(' + orderId + ')');
     order_refund_button.removeAttribute('id');
 }
 

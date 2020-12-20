@@ -243,6 +243,66 @@ function deposit_js(price) {
     });
 }
 
+function OrderArranged_js(id_order) {
+    connect();
+    console.log(id_order)
+    var contract = initContract();
+    contract.OrderArranged(id_order, function (error, result) {
+        if (!error)
+            console.log(result);
+        else
+            console.error(error);
+    });
+}
+
+function delivered_js(id_order) {
+    connect();
+    console.log(id_order)
+    var contract = initContract();
+    contract.delivered(id_order, function (error, result) {
+        if (!error)
+            console.log(result);
+        else
+            console.error(error);
+    });
+}
+
+function Refund_js(id_order) {
+    connect();
+    console.log(id_order)
+    var contract = initContract();
+    contract.Refund(id_order, function (error, result) {
+        if (!error)
+            console.log(result);
+        else
+            console.error(error);
+    });
+}
+
+function CancelOrder_js(id_order) {
+    connect();
+    console.log(id_order)
+    var contract = initContract();
+    contract.CancelOrder(id_order, function (error, result) {
+        if (!error)
+            console.log(result);
+        else
+            console.error(error);
+    });
+}
+
+function CancelOrderAdmin_js(id_order) {
+    connect();
+    console.log(id_order)
+    var contract = initContract();
+    contract.CancelOrderAdmin(id_order, function (error, result) {
+        if (!error)
+            console.log(result);
+        else
+            console.error(error);
+    });
+}
+
 function change_product(addr) {
     console.log("create post is working!") // sanity check
     $.ajax({

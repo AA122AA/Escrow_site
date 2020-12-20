@@ -278,7 +278,8 @@ function showOrder(Order, id) {
 	
     let order_template = document.createElement('div');
     order_template.append(orders_users.content.cloneNode(true));
-    document.body.append(order_template);
+    var lk_user = document.getElementsByClassName("staticText");
+    lk_user[0].appendChild(order_template);
 	
     order_time = document.getElementById("order_time");
     order_id = document.getElementById("order_id");

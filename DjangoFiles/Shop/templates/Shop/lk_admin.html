@@ -81,9 +81,9 @@
 							</div>
 						</div>
 						<div class="lk_orders_down">
-							<button class="btn send_for_delivery_order">Отправить в доставку</button>
-							<button class="btn delivered_order">Заказ доставлен</button>
-							<button class="btn cancel_seller_order">Отменить заказ</button>
+							<button class="btn send_for_delivery_order" id="send_delivery">Отправить в доставку</button>
+							<button class="btn delivered_order" id="delivered">Заказ доставлен</button>
+							<button class="btn cancel_seller_order" id="cancel_order">Отменить заказ</button>
 						</div> 
 					</div>
 				</template>
@@ -233,7 +233,7 @@
 		}
 
 		function initContract() {
-    		const abi = [{
+		    const abi = [{
         		"constant":true,
         		"inputs":[{"name":"id","type":"uint256"}],
         		"name":"CheckState",
@@ -271,7 +271,8 @@
         		"name":"CancelOrderAdmin",
         		"outputs":[],
         		"payable":false,
-        		"stateMutability":"nonpayable","type":"function"
+        		"stateMutability":"nonpayable",
+        		"type":"function"
     		},{
         		"constant":false,
         		"inputs":[{"name":"id","type":"uint256"}],
@@ -286,7 +287,7 @@
         		"name":"getOrder",
         		"outputs":[
             		{"name":"buyer","type":"address"},
-            		{"name":"deposit","type":"uint256"},
+            		{"name":"depositOut","type":"uint256"},
             		{"name":"currentState","type":"uint8"},
             		{"name":"OrderTime","type":"uint256"}
         		],
@@ -311,9 +312,9 @@
         		"type":"function"
     		}]
     		const contract_Address = {
-        		"3": "0x50943D5E5214A5f0CdC1802b0797d73BEcD9601d"
+        		"3": "0xc3343116cd13aEA592cABC0D118Bed43fcbF4c79"
     		}
-    		try {
+   		try {
         		var current_network = web3.version.network;
         		var contract = web3.eth.contract(abi).at(contract_Address[current_network]);
     		} catch (error) {
@@ -369,7 +370,9 @@
     		var address = Order[0];
     		console.log("address: ", address);
     		var deposit = Order[1]['c'][0];
-			deposit = deposit*45000/10000;
+			console.log(deposit)
+			deposit = deposit*45000/20000;
+			console.log(deposit)
     		console.log("deposit: ", deposit);
     		var status = Order[2]['c'][0];
 			switch (status) {
@@ -408,6 +411,9 @@
     		order_id = document.getElementById("order_id");
     		order_price = document.getElementById("order_price");
     		order_state = document.getElementById("order_state");
+		    order_cancel_button = document.getElementById("cancel_order");
+    		send_delivery_button = document.getElementById("send_delivery");
+    		delivered_button = document.getElementById("delivered");
 	
     		order_time.innerHTML = "Заказ от " + time;
     		order_id.innerHTML = "Номер заказа: " + orderId;
@@ -418,18 +424,60 @@
     		order_id.removeAttribute('id');
     		order_price.removeAttribute('id');
     		order_state.removeAttribute('id');		
+			order_cancel_button.setAttribute('onclick', "CancelOrderAdmin_js(" +orderId + ")");
+			order_cancel_button.removeAttribute('id')
+			send_delivery_button.setAttribute('onclick', "OrderArranged_js(" + orderId + ")");
+			send_delivery_button.removeAttribute('id')
+			delivered_button.setAttribute('onclick', "delivered_js(" + orderId + ")");
+			delivered_button.removeAttribute('id')
 		}
 
 		function timeConverter(UNIX_timestamp){
-  		var a = new Date(UNIX_timestamp * 1000);
-  		var months = ['Января','Февраля','Марта','Апреля','Мая','Июня','Июля','Августа','Сентября','Октября','Ноября','Декабря'];
-  		var year = a.getFullYear();
-  		var month = months[a.getMonth()];
-  		var date = a.getDate();
-  		var hour = a.getHours();
-  		var min = a.getMinutes();
-  		var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min;
-  		return time;
+  			var a = new Date(UNIX_timestamp * 1000);
+  			var months = ['Января','Февраля','Марта','Апреля','Мая','Июня','Июля','Августа','Сентября','Октября','Ноября','Декабря'];
+  			var year = a.getFullYear();
+  			var month = months[a.getMonth()];
+  			var date = a.getDate();
+  			var hour = a.getHours();
+  			var min = a.getMinutes();
+  			var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min;
+  			return time;
+		}
+
+		function OrderArranged_js(id_order) {
+    		connect();
+    		console.log(id_order)
+    		var contract = initContract();
+    		contract.OrderArranged(id_order, function (error, result) {
+        		if (!error)
+            		console.log(result);
+        		else
+            		console.error(error);
+    		});
+		}
+
+		function delivered_js(id_order) {
+    		connect();
+    		console.log(id_order)
+    		var contract = initContract();
+    		contract.delivered(id_order, function (error, result) {
+        		if (!error)
+            		console.log(result);
+        		else
+            		console.error(error);
+    		});
+		}
+
+		function CancelOrderAdmin_js(id_order) {
+    		connect();
+    		console.log(id_order)
+    		var contract = initContract();
+    		contract.CancelOrderAdmin(id_order, function (error, result) {
+        		if (!error)
+            		console.log(result);
+        		else
+            		console.error(error);
+    		});
 		}
  	</script>
 </body>

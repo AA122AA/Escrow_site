@@ -139,7 +139,7 @@ function add_user(addr) {
 }
 
 function initContract() {
-    const abi = [{
+        const abi = [{
         "constant":true,
         "inputs":[{"name":"id","type":"uint256"}],
         "name":"CheckState",
@@ -177,7 +177,8 @@ function initContract() {
         "name":"CancelOrderAdmin",
         "outputs":[],
         "payable":false,
-        "stateMutability":"nonpayable","type":"function"
+        "stateMutability":"nonpayable",
+        "type":"function"
     },{
         "constant":false,
         "inputs":[{"name":"id","type":"uint256"}],
@@ -192,7 +193,7 @@ function initContract() {
         "name":"getOrder",
         "outputs":[
             {"name":"buyer","type":"address"},
-            {"name":"deposit","type":"uint256"},
+            {"name":"depositOut","type":"uint256"},
             {"name":"currentState","type":"uint8"},
             {"name":"OrderTime","type":"uint256"}
         ],
@@ -217,7 +218,7 @@ function initContract() {
         "type":"function"
     }]
     const contract_Address = {
-        "3": "0x50943D5E5214A5f0CdC1802b0797d73BEcD9601d"
+        "3": "0xc3343116cd13aEA592cABC0D118Bed43fcbF4c79"
     }
     try {
         var current_network = web3.version.network;
@@ -242,90 +243,3 @@ function deposit_js(price) {
             console.error(error);
     });
 }
-
-function OrderArranged_js(id_order) {
-    connect();
-    console.log(id_order)
-    var contract = initContract();
-    contract.OrderArranged(id_order, function (error, result) {
-        if (!error)
-            console.log(result);
-        else
-            console.error(error);
-    });
-}
-
-function delivered_js(id_order) {
-    connect();
-    console.log(id_order)
-    var contract = initContract();
-    contract.delivered(id_order, function (error, result) {
-        if (!error)
-            console.log(result);
-        else
-            console.error(error);
-    });
-}
-
-function Refund_js(id_order) {
-    connect();
-    console.log(id_order)
-    var contract = initContract();
-    contract.Refund(id_order, function (error, result) {
-        if (!error)
-            console.log(result);
-        else
-            console.error(error);
-    });
-}
-
-function CancelOrder_js(id_order) {
-    connect();
-    console.log(id_order)
-    var contract = initContract();
-    contract.CancelOrder(id_order, function (error, result) {
-        if (!error)
-            console.log(result);
-        else
-            console.error(error);
-    });
-}
-
-function CancelOrderAdmin_js(id_order) {
-    connect();
-    console.log(id_order)
-    var contract = initContract();
-    contract.CancelOrderAdmin(id_order, function (error, result) {
-        if (!error)
-            console.log(result);
-        else
-            console.error(error);
-    });
-}
-
-function change_product(addr) {
-    console.log("create post is working!") // sanity check
-    $.ajax({
-        type: "POST", // http method
-        data: {
-            the_post: "-1",
-            csrfmiddlewaretoken: window.CSRF_TOKEN,
-            action: "change_product"
-        }, // data sent with the post request
-
-        // handle a successful response
-        success: function (json) {
-            $('#post-text').val(''); // remove the value from the input
-            console.log(json); // log the returned json to the console
-            console.log("success"); // another sanity check
-        },
-
-        // handle a non-successful response
-        error: function (xhr, errmsg, err) {
-            $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: " + errmsg +
-                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
-            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-        }
-    });
-};
-

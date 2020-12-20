@@ -178,7 +178,8 @@ function initContract() {
         "name":"CancelOrderAdmin",
         "outputs":[],
         "payable":false,
-        "stateMutability":"nonpayable","type":"function"
+        "stateMutability":"nonpayable",
+        "type":"function"
     },{
         "constant":false,
         "inputs":[{"name":"id","type":"uint256"}],
@@ -193,7 +194,7 @@ function initContract() {
         "name":"getOrder",
         "outputs":[
             {"name":"buyer","type":"address"},
-            {"name":"deposit","type":"uint256"},
+            {"name":"depositOut","type":"uint256"},
             {"name":"currentState","type":"uint8"},
             {"name":"OrderTime","type":"uint256"}
         ],
@@ -218,7 +219,7 @@ function initContract() {
         "type":"function"
     }]
     const contract_Address = {
-        "3": "0x50943D5E5214A5f0CdC1802b0797d73BEcD9601d"
+        "3": "0xc3343116cd13aEA592cABC0D118Bed43fcbF4c79"
     }
     try {
         var current_network = web3.version.network;

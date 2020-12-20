@@ -10,17 +10,17 @@ contract EscrowBaseContract {
     struct Order { 
         address buyer;
         uint256 deposit;
+        uint256 depositOut;
         State currentState;
         uint256 OrderTime;
     }
     
-    address payable constant seller = 0x0667FA2A9dDF39d6921373FFA82E4a48C31b2a97; 
+    address payable constant seller = 0x7662aE8Cd04DB7B568acA1a364b43Add9d3294b7; 
     uint256 OrderCount;
     mapping(address => uint[]) buyer_orders;
     mapping(uint => Order) order_list;
     modifier onlySeller(){require(msg.sender == seller); _;}
-    //modifier inState(State expectedState, uint id){require(order_list[id].currentState == expectedState); _;}
-    
+
     modifier timePassedRefund(uint256 id, uint256 time) {
         require(now - order_list[id].OrderTime >= time); 
         require(order_list[id].deposit != 0); 
@@ -37,13 +37,14 @@ contract EscrowBaseContract {
         _; 
     }
     
-    function getOrder(uint id) public view returns(address buyer, uint256 deposit, State currentState, uint256 OrderTime){
-        return (order_list[id].buyer, order_list[id].deposit, order_list[id].currentState, order_list[id].OrderTime); 
+    function getOrder(uint id) public view returns(address buyer, uint256 depositOut, State currentState, uint256 OrderTime){
+        return (order_list[id].buyer, order_list[id].depositOut, order_list[id].currentState, order_list[id].OrderTime); 
     }    
     
     function getIDs(address buyer) public view returns(uint256[] memory){
         return buyer_orders[buyer];
     }
+    
     
     function CheckState(uint id) public view returns(string memory) {
         if(order_list[id].currentState == State.AWAITING_PAYMENT)
@@ -62,8 +63,10 @@ contract EscrowBaseContract {
     function deposit() public payable {
         uint256 amount = msg.value;
         OrderCount+=1;
+        
         order_list[OrderCount].buyer = msg.sender;
         order_list[OrderCount].deposit = order_list[OrderCount].deposit + amount;
+        order_list[OrderCount].depositOut = order_list[OrderCount].deposit + amount;
         order_list[OrderCount].currentState = State.ARRANGING_ORDER;
         order_list[OrderCount].OrderTime = now;
         buyer_orders[msg.sender].push(OrderCount);

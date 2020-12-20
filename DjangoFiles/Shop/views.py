@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.views import View
 from django.http import HttpResponse
 from .models import Users, Product 
+from json import dumps
 # Create your views here.
 
 class IndexView(View):
@@ -169,7 +170,11 @@ class LkAdminView(View):
     Class for lk_admin.html page
     """
     def get(self, request):
-        return render(request, 'Shop/lk_admin.html')
+        users = Users.objects.values()
+        context = {'users': list(users)}
+        dataJSON = dumps(context)
+        return render(request, 'Shop/lk_admin.html', {'data': dataJSON})
+ 
 
     def post(self, request):
         if request.POST.get('action') == "add_user":

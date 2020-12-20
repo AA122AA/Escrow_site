@@ -15,6 +15,7 @@ window.addEventListener('load', function () {
             console.log("Вы не подключены к сети Ropsten");
         }
     }
+    getIdFromSC();
 
 })
 
@@ -252,7 +253,7 @@ function getOrder_js(ids) {
             id,
             function (error, Order) {
                 if(!error){
-                    saveOrder(Order, id);
+                    showOrder(Order, id);
                 }else{
                     console.log(error);
                 }
@@ -276,7 +277,7 @@ function showOrder(Order, id) {
     console.log("time: ", time);
 	
     let order_template = document.createElement('div');
-    order_template.append(order_users.content.cloneNode(true));
+    order_template.append(orders_users.content.cloneNode(true));
     document.body.append(order_template);
 	
     order_time = document.getElementById("order_time");
@@ -285,7 +286,7 @@ function showOrder(Order, id) {
     order_state = document.getElementById("order_state");
 	
     order_time.innerHTML = "Заказ от " + time;
-    order_id.innerHTML = "Номер заказа: " + OrderId;
+    order_id.innerHTML = "Номер заказа: " + orderId;
     order_price.innerHTML = deposit;
     order_state.innerHTML = status;
 	

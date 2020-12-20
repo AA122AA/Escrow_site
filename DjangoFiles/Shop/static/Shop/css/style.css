@@ -242,7 +242,7 @@ input:{
 #login_but:hover {background: #9a9a9a;}
 .btn:hover {background: #eee;}
 .payOrder{color:#fb5a1c;}
-.lk_order{
+.lk_orders{
 	display: flex;
 	flex-direction: column;
 	width: 100%;
@@ -252,26 +252,26 @@ input:{
 	position: relative;
 	margin-bottom: 24px;
 }
-.lk_order_top{
+.lk_orders_top{
 	background-color: #f2f3f5;
 }
-.lk_order_top1{
+.lk_orders_top1{
 	display: flex;
 	justify-content: space-between;
 	margin: 20px 24px 18px;
 }
-.order_time, .order_price{
+.orders_time, .orders_price{
 	font-size: 20px;
 	line-height: 1.3;
 	color: #001a34;
 }
-.order_id, .order_state, .order_buyer_address, .order_delivery_address, .order_product{
+.orders_id, .orders_state, .orders_buyer_address, .orders_delivery_address, .orders_product{
 	margin-top: 10px;
 	font-size: 16px;
 	line-height: 1.3;
 	color: #001a34;
 }
-.lk_order_down{
+.lk_orders_down{
 	display: flex;
 	height: 50px;
 	flex-shrink: 0;

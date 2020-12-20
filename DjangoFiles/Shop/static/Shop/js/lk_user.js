@@ -311,6 +311,8 @@ function showOrder(Order, id) {
     order_id = document.getElementById("order_id");
     order_price = document.getElementById("order_price");
     order_state = document.getElementById("order_state");
+    order_cancel_button = document.getElementById("cancelBtn");
+    order_refund_button = document.getElementById("refundBtn");
 	
     order_time.innerHTML = "Заказ от " + time;
     order_id.innerHTML = "Номер заказа: " + orderId;
@@ -318,9 +320,13 @@ function showOrder(Order, id) {
     order_state.innerHTML = "Статус заказа: " + status;
 	
     order_time.removeAttribute('id');
-    order_id.removeAttribute('id');
+    order_id.id = "order_id_"+orderId;
     order_price.removeAttribute('id');
-    order_state.removeAttribute('id');		
+    order_state.removeAttribute('id');
+    order_cancel_button.onclick = orderId;
+    order_cancel_button.removeAttribute('id');
+    order_refund_button.onclick = orderId;
+    order_refund_button.removeAttribute('id');
 }
 
 function timeConverter(UNIX_timestamp){
@@ -333,4 +339,28 @@ function timeConverter(UNIX_timestamp){
   var min = a.getMinutes();
   var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min;
   return time;
+}
+
+function cancelOrder_user(id_order){
+    connect();
+    console.log(id_order)
+    var contract = initContract();
+    contract.CancelOrder(id_order, function (error, result) {
+        if (!error)
+            console.log(result);
+        else
+            console.error(error);
+    });		
+}
+
+function refundOrder_user(id_order){
+    connect();
+    console.log(id_order)
+    var contract = initContract();
+    contract.Refund(id_order, function (error, result) {
+        if (!error)
+            console.log(result);
+        else
+            console.error(error);
+    });	
 }

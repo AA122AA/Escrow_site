@@ -15,7 +15,7 @@ contract EscrowBaseContract {
         uint256 OrderTime;
     }
     
-    address payable constant seller = 0x7662aE8Cd04DB7B568acA1a364b43Add9d3294b7; 
+    address payable constant seller = 0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2; 
     uint256 OrderCount;
     mapping(address => uint[]) buyer_orders;
     mapping(uint => Order) order_list;
@@ -70,8 +70,8 @@ contract EscrowBaseContract {
         OrderCount+=1;
         
         order_list[OrderCount].buyer = msg.sender;
-        order_list[OrderCount].deposit = order_list[OrderCount].deposit + amount;
-        order_list[OrderCount].depositOut = order_list[OrderCount].deposit + amount;
+        order_list[OrderCount].deposit += amount;
+        order_list[OrderCount].depositOut = order_list[OrderCount].deposit;
         order_list[OrderCount].currentState = State.ARRANGING_ORDER;
         order_list[OrderCount].OrderTime = now;
         buyer_orders[msg.sender].push(OrderCount);

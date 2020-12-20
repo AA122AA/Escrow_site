@@ -267,10 +267,44 @@ function showOrder(Order, id) {
     var address = Order[0];
     console.log("address: ", address);
     var deposit = Order[1]['c'][0];
+	deposit = deposit*45000/10000;
     console.log("deposit: ", deposit);
     var status = Order[2]['c'][0];
     console.log("status: ", status);
     var time = Order[3]['c'][0];
+    time = timeConverter(time);
     console.log("time: ", time);
+	
+    let order_template = document.createElement('div');
+    order_template.append(order_users.content.cloneNode(true));
+    document.body.append(order_template);
+	
+    order_time = document.getElementById("order_time");
+    order_id = document.getElementById("order_id");
+    order_price = document.getElementById("order_price");
+    order_state = document.getElementById("order_state");
+	
+    order_time.innerHTML = "Заказ от " + time;
+    order_id.innerHTML = "Номер заказа: " + OrderId;
+    order_price.innerHTML = deposit;
+    order_state.innerHTML = status;
+	
+    order_time.id = "order_time+" + orderId;
+    order_id.id = "order_id_" + orderId;
+    order_price.id = "order_price_" + orderId;
+    order_state.id = "order_state_" + orderId;
+	
 
+}
+
+function timeConverter(UNIX_timestamp){
+  var a = new Date(UNIX_timestamp * 1000);
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var year = a.getFullYear();
+  var month = months[a.getMonth()];
+  var date = a.getDate();
+  var hour = a.getHours();
+  var min = a.getMinutes();
+  var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min;
+  return time;
 }

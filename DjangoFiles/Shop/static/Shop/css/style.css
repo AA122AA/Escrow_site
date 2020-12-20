@@ -110,6 +110,9 @@ footer.footer {display:block; margin:0 auto; width: 950px;}
 	text-align:center;
 	font-size: 20px;
 }
+.iphone_img{
+	padding-bottom: 10px;	
+}
 div.logo {
 	height:100px;
 	background: #3a3a3a;

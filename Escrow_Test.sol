@@ -37,6 +37,11 @@ contract EscrowBaseContract {
         _; 
     }
     
+    modifier depNot0(uint256 id){
+        require(order_list[id].deposit != 0);
+        _;
+    }
+    
     function getOrder(uint id) public view returns(address buyer, uint256 depositOut, State currentState, uint256 OrderTime){
         return (order_list[id].buyer, order_list[id].depositOut, order_list[id].currentState, order_list[id].OrderTime); 
     }    
@@ -99,7 +104,7 @@ contract EscrowBaseContract {
         order_list[id].currentState = State.CANCELLED;
     }
     
-    function CancelOrderAdmin(uint256 id) public onlySeller(){
+    function CancelOrderAdmin(uint256 id) public onlySeller() depNot0(id){
         msg.sender.transfer(order_list[id].deposit);
         order_list[id].deposit = 0;
         order_list[id].currentState = State.CANCELLED;

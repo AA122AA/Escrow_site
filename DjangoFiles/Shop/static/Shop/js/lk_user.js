@@ -271,6 +271,28 @@ function showOrder(Order, id) {
 	deposit = deposit*45000/10000;
     console.log("deposit: ", deposit);
     var status = Order[2]['c'][0];
+	switch (status) {
+	  case 0:
+	    status = "Ожидается оплаты";
+	    break;
+	  case 1:
+	    status = "Отменен ";
+	    break;
+	  case 2:
+	    status = "Сборка заказа";
+	    break;
+	  case 3:
+	    status = "Доставляется";
+	    break;
+	  case 4:
+	    status = "Возврат средств";
+	    break;
+	  case 5:
+	    status = "Выполнен";
+	    break;
+	  default:
+	    status = "Ожидается оплата";
+	}
     console.log("status: ", status);
     var time = Order[3]['c'][0];
     time = timeConverter(time);
@@ -288,20 +310,18 @@ function showOrder(Order, id) {
 	
     order_time.innerHTML = "Заказ от " + time;
     order_id.innerHTML = "Номер заказа: " + orderId;
-    order_price.innerHTML = deposit;
-    order_state.innerHTML = status;
+    order_price.innerHTML = "Вы заплатили: " + deposit + " руб.";
+    order_state.innerHTML = "Статус заказа: " + status;
 	
     order_time.removeAttribute('id');
     order_id.removeAttribute('id');
     order_price.removeAttribute('id');
-    order_state.removeAttribute('id');	
-	
-
+    order_state.removeAttribute('id');		
 }
 
 function timeConverter(UNIX_timestamp){
   var a = new Date(UNIX_timestamp * 1000);
-  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var months = ['Января','Февраля','Марта','Апреля','Мая','Июня','Июля','Августа','Сентября','Октября','Ноября','Декабря'];
   var year = a.getFullYear();
   var month = months[a.getMonth()];
   var date = a.getDate();

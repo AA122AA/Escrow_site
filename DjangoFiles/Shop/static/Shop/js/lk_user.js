@@ -273,7 +273,7 @@ function showOrder(Order, id) {
     var address = Order[0];
     console.log("address: ", address);
     var deposit = Order[1]['c'][0];
-	deposit = deposit*45000/10000;
+	deposit = deposit*45000/20000;
     console.log("deposit: ", deposit);
     var status = Order[2]['c'][0];
 	switch (status) {

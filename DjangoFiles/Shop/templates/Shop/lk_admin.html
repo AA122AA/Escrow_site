@@ -66,24 +66,21 @@
 	<li class="static">
 			<article class="staticText">
 				<h2>Заказы</h2>
-				<template id="orders">
-					<div class="lk_order">
-						<div class="lk_order_top">
-							<div class="lk_order_top1">
-								<div class="lk_order_top_left">
-									<span class="order_time">Заказ от </span>
-									<p class="order_id">Номер заказа  </p>
-									<p class="order_product">Товар</p>
-									<p class="order_buyer_address">Адрес кошелька покупателя</p>
-									<p class="order_delivery_address">Адрес доставки</p>
+				<template id="orders_users">
+					<div class="lk_orders">
+						<div class="lk_orders_top">
+							<div class="lk_orders_top1">
+								<div class="lk_orders_top_left">
+									<span id="order_time" class="orders_time">Заказ от </span>
+									<p id="order_id" class="orders_id">Номер заказа  </p>
 								</div>
-								<div class="lk_order_top_right">
-									<span class="order_price">120000</span>
-									<p class="order_state">Оплачен</p>
+								<div class="lk_orders_top_right">
+									<span id="order_price" class="orders_price">120000</span>
+									<p id="order_state" class="orders_state">Оплачен</p>
 								</div>
 							</div>
 						</div>
-						<div class="lk_order_down">
+						<div class="lk_orders_down">
 							<button class="btn send_for_delivery_order">Отправить в доставку</button>
 							<button class="btn delivered_order">Заказ доставлен</button>
 							<button class="btn cancel_seller_order">Отменить заказ</button>
@@ -112,6 +109,8 @@
         		} else {
             		console.log("Вы не подключены к сети Ropsten");
         		}
+				getUsers();
+
     		}
 		})
 
@@ -324,10 +323,115 @@
 		}
 
 		function getUsers(){
-			var data = JSON.parse("{{data|escapejs}}");
-			console.log(data);
+			var users = JSON.parse("{{data|escapejs}}");
+			users.users.forEach(user => {
+        		getIdFromSC(user['wallet_address']);
+			})
 		}
-  	</script>
+
+		function getIdFromSC(addr) {
+    		var contract = initContract();
+    		contract.getIDs(
+        		addr,
+        		function (error, ids) {
+            		if(!error){
+                		getOrder_js(ids);
+            		}else{
+                		console.log(error);
+           		 }
+       		}); 
+		}
+		
+		function getOrder_js(ids) {
+		    var contract = initContract();
+    		ids.forEach(id_dirty => {
+        		id = id_dirty['c'][0];
+				getOrder_SC(contract, id);
+   		});
+		}
+
+		function getOrder_SC(contract, id){
+        	contract.getOrder(
+            	id,
+            	function (error, Order) {
+                	if(!error){
+                    	showOrder(Order, id);
+                	}else{
+                    	console.log(error);
+                	}
+            	}
+        	);   
+		}
+
+		function showOrder(Order, id) {
+    		var orderId = id;
+    		console.log("id: ", orderId);
+    		var address = Order[0];
+    		console.log("address: ", address);
+    		var deposit = Order[1]['c'][0];
+			deposit = deposit*45000/10000;
+    		console.log("deposit: ", deposit);
+    		var status = Order[2]['c'][0];
+			switch (status) {
+	  		case 0:
+	    		status = "Ожидается оплаты";
+	    		break;
+	  		case 1:
+	    		status = "Отменен ";
+	    		break;
+	  		case 2:
+	    		status = "Сборка заказа";
+	    		break;
+	  		case 3:
+	    		status = "Доставляется";
+	    		break;
+	  		case 4:
+	    		status = "Возврат средств";
+	    		break;
+	  		case 5:
+	    		status = "Выполнен";
+	    		break;
+	  		default:
+	    		status = "Ожидается оплата";
+			}
+    		console.log("status: ", status);
+    		var time = Order[3]['c'][0];
+    		time = timeConverter(time);
+    		console.log("time: ", time);
+	
+    		let order_template = document.createElement('div');
+    		order_template.append(orders_users.content.cloneNode(true));
+    		var lk_user = document.getElementsByClassName("staticText");
+    		lk_user[0].appendChild(order_template);
+	
+    		order_time = document.getElementById("order_time");
+    		order_id = document.getElementById("order_id");
+    		order_price = document.getElementById("order_price");
+    		order_state = document.getElementById("order_state");
+	
+    		order_time.innerHTML = "Заказ от " + time;
+    		order_id.innerHTML = "Номер заказа: " + orderId;
+    		order_price.innerHTML = "Цена: " + deposit + " руб.";
+    		order_state.innerHTML = "Статус заказа: " + status;
+	
+    		order_time.removeAttribute('id');
+    		order_id.removeAttribute('id');
+    		order_price.removeAttribute('id');
+    		order_state.removeAttribute('id');		
+		}
+
+		function timeConverter(UNIX_timestamp){
+  		var a = new Date(UNIX_timestamp * 1000);
+  		var months = ['Января','Февраля','Марта','Апреля','Мая','Июня','Июля','Августа','Сентября','Октября','Ноября','Декабря'];
+  		var year = a.getFullYear();
+  		var month = months[a.getMonth()];
+  		var date = a.getDate();
+  		var hour = a.getHours();
+  		var min = a.getMinutes();
+  		var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min;
+  		return time;
+		}
+ 	</script>
 </body>
 </html>
 

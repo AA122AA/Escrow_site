@@ -249,17 +249,21 @@ function getOrder_js(ids) {
     ids.forEach(id_dirty => {
         id = id_dirty['c'][0];
         console.log("id in order: ", id);
-        contract.getOrder(
-            id,
-            function (error, Order) {
-                if(!error){
-                    showOrder(Order, id);
-                }else{
-                    console.log(error);
-                }
-            }
-        );   
+        getOrder_SC(contract, id);   
     });
+}
+
+function getOrder_SC(contract, id){
+       contract.getOrder(
+           id,
+           function (error, Order) {
+               if(!error){
+                   showOrder(Order, id);
+               }else{
+                   console.log(error);
+               }
+           }
+       );   
 }
 
 function showOrder(Order, id) {

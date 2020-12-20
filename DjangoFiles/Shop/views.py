@@ -33,8 +33,6 @@ class IndexView(View):
             else:
                 print("undefined address")
             return HttpResponse("nice")
-        elif request.POST.get('action') == "change_product":
-            pass
 
 class ContactsView(View):
     """
@@ -217,3 +215,5 @@ class LkView(View):
             else:
                 print("undefined address")
             return HttpResponse("nice")
+
+

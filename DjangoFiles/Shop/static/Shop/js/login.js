@@ -1,3 +1,4 @@
+const admin = "0x0667FA2A9dDF39d6921373FFA82E4a48C31b2a97";
 window.addEventListener('load', function () {
     // Checking if Web3 has been injected by the browser (Mist/MetaMask)
     if (typeof web3 !== 'undefined') {
@@ -9,18 +10,40 @@ window.addEventListener('load', function () {
         var currentNetwork = web3.version.network;
         if (currentNetwork == 3) {
             console.log("Вы подключены к Ropsten");
+            changeLkUrl()
         } else {
             console.log("Вы не подключены к сети Ropsten");
         }
     }
+
+})
+
+function changeLkUrl() {
     let cookie = getCookie('address');
     console.log(cookie)
-    if (cookie !== "undefined") {
+    if (typeof cookie !== "undefined") {
+        console.log("in cookie")
         addr = cookie;
         show_address(addr);
+        if (addr == admin.toLowerCase()){
+            changeURLadmin();
         }
-})
-        
+        else{
+            console.log("user")
+            changeURLUser();
+        }
+    }
+}
+function changeURLadmin(){
+	var lk = document.getElementById('lk')
+	lk.href='lk_admin';
+}
+function changeURLUser(){
+    console.log("user")
+	var lk = document.getElementById('lk')
+	lk.href='lk_user';
+}
+
 function getCookie(name) {
   let matches = document.cookie.match(new RegExp(
     "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
@@ -52,6 +75,7 @@ function setCookie(name, value, options = {}) {
 
 $('#post-form').on('submit', function (event) {
     let addr = connect()
+    changeLkUrl()
     show_address(addr)
     console.log("done")
     event.preventDefault()
@@ -70,7 +94,16 @@ function show_address(addr) {
 
 function connect() {
     if (typeof ethereum !== 'undefined') {
-        ethereum.enable().catch(console.error);
+       ethereum
+        .request({ method: 'eth_requestAccounts' })
+        .catch((error) => {
+        if (error.code === 4001) {
+            // EIP-1193 userRejectedRequest error
+            console.log('Please connect to MetaMask.');
+        } else {
+            console.error(error);
+        }
+        }); 
         let addr = web3.eth.accounts[0];
         setCookie('address', encodeURIComponent(addr), {secure: true, 'max-age': 3600});
         return addr;
@@ -78,7 +111,6 @@ function connect() {
         document.getElementById("address").innerHTML = "Error";
     }
 }
-
 
 function add_user(addr) {
     console.log("create post is working!") // sanity check

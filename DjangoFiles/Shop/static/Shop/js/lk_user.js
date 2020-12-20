@@ -290,10 +290,10 @@ function showOrder(Order, id) {
     order_price.innerHTML = deposit;
     order_state.innerHTML = status;
 	
-    order_time.id = "order_time+" + orderId;
-    order_id.id = "order_id_" + orderId;
-    order_price.id = "order_price_" + orderId;
-    order_state.id = "order_state_" + orderId;
+    order_time.removeAttribute('id');
+    order_id.removeAttribute('id');
+    order_price.removeAttribute('id');
+    order_state.removeAttribute('id');	
 	
 
 }

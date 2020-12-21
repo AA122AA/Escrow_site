@@ -29,8 +29,7 @@ contract EscrowBaseContract {
         _; 
     }
     
-    modifier timePassedCancel(uint256 id, uint256 time) {
-        require(now - order_list[id].OrderTime <= time); 
+    modifier timePassedCancel(uint256 id) {
         require(order_list[id].deposit != 0); 
         require(msg.sender == order_list[id].buyer); 
         require(order_list[id].currentState == State.ARRANGING_ORDER);
@@ -98,7 +97,7 @@ contract EscrowBaseContract {
         order_list[id].currentState = State.REFUNDED;
     }
     
-    function CancelOrder(uint256 id) public timePassedCancel(id, 1 minutes) {
+    function CancelOrder(uint256 id) public timePassedCancel(id) {
         msg.sender.transfer(order_list[id].deposit);
         order_list[id].deposit = 0;
         order_list[id].currentState = State.CANCELLED;

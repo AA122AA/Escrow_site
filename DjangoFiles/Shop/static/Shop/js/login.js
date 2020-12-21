@@ -1,4 +1,4 @@
-const admin = "0x0667FA2A9dDF39d6921373FFA82E4a48C31b2a97";
+const admin = "0xD9eaa853bBCCcf5CB0A49241A7F69d743f3cf049";
 window.addEventListener('load', function () {
     // Checking if Web3 has been injected by the browser (Mist/MetaMask)
     if (typeof web3 !== 'undefined') {

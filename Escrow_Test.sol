@@ -15,7 +15,7 @@ contract EscrowBaseContract {
         uint256 OrderTime;
     }
     
-    address payable constant seller = 0xd9eaa853bbcccf5cb0a49241a7f69d743f3cf049; 
+    address payable constant seller = 0xD9eaa853bBCCcf5CB0A49241A7F69d743f3cf049; 
     uint256 OrderCount;
     mapping(address => uint[]) buyer_orders;
     mapping(uint => Order) order_list;

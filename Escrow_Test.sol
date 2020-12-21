@@ -8,7 +8,7 @@ contract EscrowBaseContract {
     State constant default_value  = State.AWAITING_PAYMENT;
     //address buyer;
     struct Order { 
-        address buyer;
+        address payable buyer;
         uint256 deposit;
         uint256 depositOut;
         State currentState;
@@ -104,7 +104,7 @@ contract EscrowBaseContract {
     }
     
     function CancelOrderAdmin(uint256 id) public onlySeller() depNot0(id){
-        msg.sender.transfer(order_list[id].deposit);
+        order_list[id].buyer.transfer(order_list[id].deposit);
         order_list[id].deposit = 0;
         order_list[id].currentState = State.CANCELLED;
     }

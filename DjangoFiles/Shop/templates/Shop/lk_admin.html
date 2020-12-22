@@ -448,22 +448,22 @@
 	
     		order_time = document.getElementById("order_time");
     		order_id = document.getElementById("order_id");
-		order_addr = document.getElementById("order_addr");	
+			order_addr = document.getElementById("order_addr");	
     		order_price = document.getElementById("order_price");
     		order_state = document.getElementById("order_state");
-		order_cancel_button = document.getElementById("cancel_order");
+			order_cancel_button = document.getElementById("cancel_order");
     		send_delivery_button = document.getElementById("send_delivery");
     		delivered_button = document.getElementById("delivered");
 	
     		order_time.innerHTML = "Заказ от " + time;
     		order_id.innerHTML = "Номер заказа: " + orderId;
-		order_addr.innerHTML = "Адрес покупателя: " + address;	
+			order_addr.innerHTML = "Адрес покупателя: " + address;	
     		order_price.innerHTML = "Цена: " + deposit + " руб.";
     		order_state.innerHTML = "Статус заказа: " + status;
 	
     		order_time.removeAttribute('id');
     		order_id.removeAttribute('id');
-		order_addr.removeAttribute('id');
+			order_addr.removeAttribute('id');
     		order_price.removeAttribute('id');
     		order_state.removeAttribute('id');		
 			order_cancel_button.setAttribute('onclick', "CancelOrderAdmin_js(" +orderId + ")");

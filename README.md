@@ -1,4 +1,10 @@
 # Selling site with Ecsrow smart contract
+Project goal is to create safe platform for online shopping. The main part of the project is smart contract written in contract-oriented language Solidity.
+
+For example our team has created site for online purchasing Apple iPhones. 
+
+Back-end - Django framework with SQLite database.
+
 
 ## Theoretical functionality:
 1. Сheck the availability of goods - if available, transfer money to smart contract.

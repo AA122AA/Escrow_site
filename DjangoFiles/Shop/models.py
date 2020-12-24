@@ -22,14 +22,10 @@ class Users(models.Model):
     """
     Таблица, содержащая данные о пользователях:
     - Адрес кошелька;
-    - Логин;
-    - Пароль;
     - Роль пользователя на сайте(пока сделаю так: 0 - админ, 1 - клиент, 2 - Курьер);
     """
-    wallet_adress = models.CharField(max_length=200)
-    login = models.EmailField()
-    password = models.CharField(max_length=25)
-    role = models.IntegerField(default=0)
+    wallet_address = models.CharField(max_length=200, unique=True)
+    role = models.IntegerField(default=1)
     def __str__(self):
-        return self.login
+        return self.wallet_address
 

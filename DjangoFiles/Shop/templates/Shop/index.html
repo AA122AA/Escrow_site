@@ -1,0 +1,157 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- META -->
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=950">
+
+	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href={% static 'Shop/css/reset.css'%} />
+	<link rel="stylesheet" type="text/css" href={% static 'Shop/css/style.css'%}>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+	<title>Проект 4 команды, escrow-контракты для интернет-магазина</title>
+</head>
+<body>
+<!-- header-->
+
+<div class="header-container">
+	<div class="logo">
+		<div class="phone left">
+			<h1>Ежедневно c 10:00 до 21:00.</h1>
+		</div>
+		<div class="command_name">
+			<p>Команда №4</p>
+			<a href={% url 'index' %}>На главную</a>
+		</div>
+		<div class="phone right">
+			<h1>8 (800) 555 35 35</h1>
+			<span class="phone-caption">
+				<p>Звоните бесплатно из регионов!</p>
+			</span>
+			<br>
+			<div class="guest_login">
+				<form method="POST" id="post-form">
+					{% csrf_token %}
+					<h3><input type="submit" value="Войти" id="login_but"></h3>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+	
+<div class="account_info">
+	<p id="address" class="address_account">Вы не зашли на сайт со своего кошелька</p>
+</div>	
+	
+<header class="header">
+	<div class="clear"></div>
+	<div id="infoContainer">
+		<a href={% url 'dostavka' %} class="dostavka"><span class="title">Доставка</span>За сутки по СПб,<br/>отправка по всей России!</a>
+		<a href={% url 'oplata' %} class="oplata"><span class="title">Оплата</span>0% платежи от регионов,<br/>работаем с юр. лицами!</a>
+		<a href={% url 'garanty' %} class="garanty"><span class="title">Гарантия</span>1 год на всю технику!</a>
+		<a id="lk" href={% url 'lk' %} class="lk">
+			<span class="title">Личный<br>Кабинет</span>
+		</a>
+		<a href={% url 'contacts' %} class="contacts noBorder"><span class="title">Контакты</span>Работаем каждый день<br/>с 10.00 до 21.00</a>
+	</div>
+
+<!-- END header -->
+
+<!-- content -->
+<section class="content">
+	<ul class="container">
+	<li id="iphone">
+			<article class="iphone12_pro">
+				<div class="iphone_img">
+					<img alt="iPhone new" src={% static 'Shop/images/iPhone12_pro.png'%}>
+				</div>
+				<h2>iPhone 12 Pro</h2>
+				<ul>
+				<li>серебристый/графитовый/</li>
+				<li>золотой/"тихоокеанский синий"</li>
+					<li style="margin-bottom:15px"></li>
+				
+					<li>{{ iphones.0.name }} &mdash; <button onclick="deposit_js(this.innerHTML)" class="btn payOrder">{{ iphones.0.price }}</button> ₽</li>
+					<li>{{ iphones.1.name }} &mdash; <button onclick="deposit_js(this.innerHTML)" class="btn payOrder">{{ iphones.1.price }}</button> ₽</li>
+					<li>{{ iphones.2.name }} &mdash; <button onclick="deposit_js(this.innerHTML)" class="btn payOrder">{{ iphones.2.price }}</button> ₽</li>
+				<li><br/></li>
+				<ul>
+					<li style="margin-bottom:15px"></li>
+				
+					<li>{{ iphones.3.name }} &mdash; <button onclick="deposit_js(this.innerHTML)" class="btn payOrder">{{ iphones.3.price }}</button> ₽</li>
+					<li>{{ iphones.4.name }} &mdash; <button onclick="deposit_js(this.innerHTML)" class="btn payOrder">{{ iphones.4.price }}</button> ₽</li>
+					<li>{{ iphones.5.name }} &mdash; <button onclick="deposit_js(this.innerHTML)" class="btn payOrder">{{ iphones.5.price }}</button> ₽</li>
+				</ul>
+				<img alt="iPhone new" src={% static 'Shop/images/new.png' %}>
+
+				<li><br/></li>
+			</article>
+		</li>
+	<li id="iphone">
+			<article class="iphone12">
+				<div class="iphone_img">
+					<img alt="iPhone new" src={% static 'Shop/images/iPhone12_3 copy.png' %}>
+				</div>
+				<h2>iPhone 12</h2>
+				<ul>
+				<li style="margin-bottom:15px">черный/белый/красный/зеленый/синий</li>
+					<li style="margin-bottom:15px"></li>
+				
+					<li>{{ iphones.6.name }} &mdash; <button onclick="deposit_js(this.innerHTML)" class="btn payOrder">{{ iphones.6.price }}</button> ₽</li>
+					<li>{{ iphones.7.name }} &mdash; <button onclick="deposit_js(this.innerHTML)" class="btn payOrder">{{ iphones.7.price }}</button> ₽</li>
+					<li>{{ iphones.8.name }} &mdash; <button onclick="deposit_js(this.innerHTML)" class="btn payOrder">{{ iphones.8.price }}</button> ₽</li>
+				</ul>
+				<li><br/></li>
+				<ul>
+					<li style="margin-bottom:15px"></li>
+				
+					<li>{{ iphones.9.name }} &mdash; <button onclick="deposit_js(this.innerHTML)" class="btn payOrder">{{ iphones.9.price }}</button> ₽</li>
+					<li>{{ iphones.10.name }} &mdash; <button onclick="deposit_js(this.innerHTML)" class="btn payOrder">{{ iphones.10.price }}</button> ₽</li>
+					<li>{{ iphones.11.name }} &mdash; <span>скоро!</span></li>
+				</ul>
+				<img alt="iPhone new" src={% static 'Shop/images/new.png' %}>
+				<li><br/></li>
+					<li><br/></li>
+					<li><br/></li>
+			</article>
+		</li>
+		<li id="iphone">
+			<article class="iphone_pro">
+				<div class="iphone_img">
+					<img alt="iPhone new" src={% static 'Shop/images/iphone_pro_2.png' %}>
+				</div>
+				<h2>iPhone 11 Pro</h2>
+				<ul>
+				<li>темно-зеленый/золотой/</li>
+				<li style="margin-bottom:15px">серебристый/«серый космос»</li>
+					<li style="margin-bottom:15px"></li>
+				
+					<li>{{ iphones.12.name }} &mdash; <button onclick="deposit_js(this.innerHTML)" class="btn payOrder">{{ iphones.12.price }}</button> ₽</li>
+					<li>{{ iphones.13.name }} &mdash; <button onclick="deposit_js(this.innerHTML)" class="btn payOrder">{{ iphones.13.price }}</button> ₽</li>
+					<li>{{ iphones.14.name }} &mdash; <button onclick="deposit_js(this.innerHTML)" class="btn payOrder">{{ iphones.14.price }}</button> ₽</li>
+				</ul>
+			<li><br/></li>
+			<ul> 
+				<li style="margin-bottom:15px"></li>
+							
+				<li>{{ iphones.15.name }} &mdash; <button onclick="deposit_js(this.innerHTML)" class="btn payOrder">{{ iphones.15.price }}</button> ₽</li>
+			    <li>{{ iphones.16.name }} &mdash; <button onclick="deposit_js(this.innerHTML)" class="btn payOrder">{{ iphones.16.price }}</button> ₽</li>
+			    <li>{{ iphones.17.name }} &mdash; <button onclick="deposit_js(this.innerHTML)" class="btn payOrder">{{ iphones.17.price }}</button> ₽</li>
+		    </ul>
+            <li><br/></li>
+			<li><br/></li>
+			<li><br/></li>
+			<li><br/></li>
+			</article>
+		</li>
+	</ul>
+	<script type="text/javascript" >
+		window.CSRF_TOKEN = "{{ csrf_token }}";
+  	</script>
+	<script type="text/javascript" src="{% static 'Shop/js/index.js'%}">
+  	</script>
+	</body>
+</html>

@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- META -->
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=950">
+
+	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href={% static 'Shop/css/reset.css' %}/>
+	<link rel="stylesheet" type="text/css" href={% static 'Shop/css/style.css' %}>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<title>Проект 4 команды, escrow-контракты для интернет-магазина</title>
+</head>
+<body>
+<!-- header-->
+
+<div class="header-container">
+	<div class="logo">
+		<div class="phone left">
+			<h1>Ежедневно c 10:00 до 21:00.</h1>
+		</div>
+		<div class="command_name">
+			<p>Команда №4</p>
+			<a href={% url 'index' %}>На главную</a>
+		</div>
+		<div class="phone right">
+			<h1>8 (800) 555 35 35</h1>
+			<span class="phone-caption">
+				<p>Звоните бесплатно из регионов!</p>
+			</span>
+			<br>
+			<div class="guest_login">
+				<form method="POST" id="post-form">
+					{% csrf_token %}
+					<h3><input type="submit" value="Войти" id="login_but"></h3>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+	
+<div class="account_info">
+	<p id="address" class="address_account">Вы не зашли на сайт со своего кошелька</p>
+</div>	
+	
+<header class="header">
+	<div class="clear"></div>
+	<div id="infoContainer">
+		<a href={% url 'dostavka' %} class="dostavka"><span class="title">Доставка</span>За сутки по СПб,<br/>отправка по всей России!</a>
+		<a href={% url 'oplata' %} class="oplata"><span class="title">Оплата</span>0% платежи от регионов,<br/>работаем с юр. лицами!</a>
+		<a href={% url 'garanty' %} class="garanty"><span class="title">Гарантия</span>1 год на всю технику!</a>
+		<a id="lk" href={% url 'lk' %} class="lk">
+			<span class="title">Личный<br>Кабинет</span>
+		</a>
+		<a href={% url 'contacts' %} class="contacts noBorder"><span class="title">Контакты</span>Работаем каждый день<br/>с 10.00 до 21.00</a>
+	</div>
+
+<!-- END header -->
+
+<!-- content -->
+<section class="content">
+	<ul class="container">
+	<li class="static">
+			<article class="lk_staticText">
+				<div>
+					<h1>Вы не зашли на сайт через MetaMask.</h1>
+					<h1>Просим вас сделать это для отображения ваших заказов.</h1>
+				</div>
+					<button id="login_but">Войти</button>
+			</article>
+		</li>
+	</ul>
+	<script type="text/javascript" >
+		window.CSRF_TOKEN = "{{ csrf_token }}";
+  	</script>
+	<script type="text/javascript" src="{% static 'Shop/js/login.js'%}">
+  	</script>
+</body>
+</html>
+
+            
+
+
+
+        
+        
+        
+     

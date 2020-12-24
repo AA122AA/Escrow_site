@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- META -->
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=950">
+
+	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href={% static 'Shop/css/reset.css' %}/>
+	<link rel="stylesheet" type="text/css" href={% static 'Shop/css/style.css' %}>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<title>Проект 4 команды, escrow-контракты для интернет-магазина</title>
+</head>
+<body>
+<!-- header-->
+
+<div class="header-container">
+	<div class="logo">
+		<div class="phone left">
+			<h1>Ежедневно c 10:00 до 21:00.</h1>
+		</div>
+		<div class="command_name">
+			<p>Команда №4</p>
+			<a href={% url 'index' %}>На главную</a>
+		</div>
+		<div class="phone right">
+			<h1>8 (800) 555 35 35</h1>
+			<span class="phone-caption">
+				<p>Звоните бесплатно из регионов!</p>
+			</span>
+			<br>
+			<div class="guest_login">
+				<form method="POST" id="post-form">
+					{% csrf_token %}
+					<h3><input type="submit" value="Войти" id="login_but"></h3>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+	
+<div class="account_info">
+	<p id="address" class="address_account">Вы не зашли на сайт со своего кошелька</p>
+</div>	
+	
+
+<header class="header">
+	<div class="clear"></div>
+	<div id="infoContainer">
+		<a href={% url 'dostavka' %} class="dostavka"><span class="title">Доставка</span>За сутки по СПб,<br/>отправка по всей России!</a>
+		<a href={% url 'oplata' %} class="oplata"><span class="title">Оплата</span>0% платежи от регионов,<br/>работаем с юр. лицами!</a>
+		<a href={% url 'garanty' %} class="garanty"><span class="title">Гарантия</span>1 год на всю технику!</a>
+		<a id="lk" href={% url 'lk' %} class="lk">
+			<span class="title">Личный<br>Кабинет</span>
+		</a>
+		<a href={% url 'contacts' %} class="contacts noBorder"><span class="title">Контакты</span>Работаем каждый день<br/>с 10.00 до 21.00</a>
+	</div>
+
+<!-- END header -->
+
+<!-- content -->
+<section class="content">
+	<ul class="container">
+	<li class="static">
+			<article class="staticText">
+				<h2>Ваши заказы</h2>
+				<template id="orders_users">
+					<div class="lk_orders">
+						<div class="lk_orders_top">
+							<div class="lk_orders_top1">
+								<div class="lk_orders_top_left">
+									<span id="order_time" class="orders_time">Заказ от </span>
+									<p id="order_id" class="orders_id">Номер заказа  </p>
+								</div>
+								<div class="lk_orders_top_right">
+									<span id="order_price" class="orders_price">120000</span>
+									<p id="order_state" class="orders_state">Оплачен</p>
+								</div>
+							</div>
+						</div>
+						<div class="lk_orders_down">
+							<button id="cancelBtn" class="btn cancel_buyer_orders" onclick="cancelOrder_user()">Отменить заказ</button>
+							<button id="refundBtn" class="btn refund_orders" onclick="refundOrder_user()">Заказ не пришел спустя 2 месяца после доставки</button>
+						</div> 
+					</div>
+				</template>
+			</article>
+		</li>
+	</ul>
+	<script type="text/javascript" >
+		window.CSRF_TOKEN = "{{ csrf_token }}";
+  	</script>
+	<script type="text/javascript" src="{% static 'Shop/js/lk_user.js'%}">
+  	</script>
+</body>
+</html>
+
+            
+
+
+
+        
+        
+        
+     

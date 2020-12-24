@@ -1,0 +1,535 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- META -->
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=950">
+
+	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href={% static 'Shop/css/reset.css' %}/>
+	<link rel="stylesheet" type="text/css" href={% static 'Shop/css/style.css' %}>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<title>Проект 4 команды, escrow-контракты для интернет-магазина</title>
+</head>
+<body>
+<!-- header-->
+
+<div class="header-container">
+	<div class="logo">
+		<div class="phone left">
+			<h1>Ежедневно c 10:00 до 21:00.</h1>
+		</div>
+		<div class="command_name">
+			<p>Команда №4</p>
+			<a href={% url 'index' %}>На главную</a>
+		</div>
+		<div class="phone right">
+			<h1>8 (800) 555 35 35</h1>
+			<span class="phone-caption">
+				<p>Звоните бесплатно из регионов!</p>
+			</span>
+			<br>
+			<div class="guest_login">
+				<form method="POST" id="post-form">
+					{% csrf_token %}
+					<h3><input type="submit" value="Войти" id="login_but"></h3>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+	
+<div class="account_info">
+	<p id="address" class="address_account">Вы не зашли на сайт со своего кошелька</p>
+</div>	
+	
+
+<header class="header">
+	<div class="clear"></div>
+	<div id="infoContainer">
+		<a href={% url 'dostavka' %} class="dostavka"><span class="title">Доставка</span>За сутки по СПб,<br/>отправка по всей России!</a>
+		<a href={% url 'oplata' %} class="oplata"><span class="title">Оплата</span>0% платежи от регионов,<br/>работаем с юр. лицами!</a>
+		<a href={% url 'garanty' %} class="garanty"><span class="title">Гарантия</span>1 год на всю технику!</a>
+		<a id="lk" href={% url 'lk' %} class="lk">
+			<span class="title">Личный<br>Кабинет</span>
+		</a>
+		<a href={% url 'contacts' %} class="contacts noBorder"><span class="title">Контакты</span>Работаем каждый день<br/>с 10.00 до 21.00</a>
+	</div>
+
+<!-- END header -->
+
+<!-- content -->
+<section class="content">
+	<ul class="container">
+	<li class="static">
+			<article class="staticText">
+				<h2>Заказы</h2>
+				<template id="orders_users">
+					<div class="lk_orders">
+						<div class="lk_orders_top">
+							<div class="lk_orders_top1">
+								<div class="lk_orders_top_left">
+									<span id="order_time" class="orders_time">Заказ от </span>
+									<p id="order_id" class="orders_id">Номер заказа  </p>
+									<p id="order_addr" class="orders_id">Адрес покупателя: </p>
+								</div>
+								<div class="lk_orders_top_right">
+									<span id="order_price" class="orders_price">120000</span>
+									<p id="order_state" class="orders_state">Оплачен</p>
+								</div>
+							</div>
+						</div>
+						<div class="lk_orders_down">
+							<button class="btn send_for_delivery_order" id="send_delivery">Отправить в доставку</button>
+							<button class="btn delivered_order" id="delivered">Заказ доставлен</button>
+							<button class="btn cancel_seller_order" id="cancel_order">Отменить заказ</button>
+						</div> 
+					</div>
+				</template>
+			</article>
+		</li>
+	</ul>
+	<script type="text/javascript" >
+		window.CSRF_TOKEN = "{{ csrf_token }}";
+
+		const admin = "0xD9eaa853bBCCcf5CB0A49241A7F69d743f3cf049";
+		window.addEventListener('load', function () {
+    		// Checking if Web3 has been injected by the browser (Mist/MetaMask)
+    		if (typeof web3 !== 'undefined') {
+        		// Use Mist/MetaMask's provider
+        		console.log("Web3 detected!");
+        		window.web3 = new Web3(web3.currentProvider);
+        		// Now you can start your app & access web3 freely:
+        		console.log("Вы подключены к Блокчейн");
+        		var currentNetwork = web3.version.network;
+        		if (currentNetwork == 3) {
+            		console.log("Вы подключены к Ropsten");
+            		changeLkUrl()
+        		} else {
+            		console.log("Вы не подключены к сети Ropsten");
+        		}
+				getUsers();
+
+    		}
+		})
+
+		function changeLkUrl() {
+    		let cookie = getCookie('address');
+    		console.log(cookie)
+    		if (typeof cookie !== "undefined") {
+        		console.log("in cookie")
+        		addr = cookie;
+        		show_address(addr);
+        		if (addr == admin.toLowerCase()){
+            		changeURLadmin();
+        		}
+        		else{
+            		console.log("user")
+            		changeURLUser();
+        		}
+    		}
+		}
+
+		function changeURLadmin(){
+			var lk = document.getElementById('lk')
+			lk.href='lk_admin';
+		}
+
+		function changeURLUser(){
+    		console.log("user")
+			var lk = document.getElementById('lk')
+			lk.href='lk_user';
+		}
+
+		function getCookie(name) {
+  		let matches = document.cookie.match(new RegExp(
+    		"(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+  		));
+  		return matches ? decodeURIComponent(matches[1]) : undefined;
+		}
+
+		function setCookie(name, value, options = {}) {
+   	 		options = {
+        		path: '/'
+    		};
+  			if (options.expires instanceof Date) {
+    			options.expires = options.expires.toUTCString();
+  			}
+  			let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+  			for (let optionKey in options) {
+    			updatedCookie += "; " + optionKey;
+    			let optionValue = options[optionKey];
+    			if (optionValue !== true) {
+      			updatedCookie += "=" + optionValue;
+    			}
+  			}
+  			document.cookie = updatedCookie;
+		}
+
+		$('#post-form').on('submit', function (event) {
+    		let addr = connect()
+    		changeLkUrl()
+    		show_address(addr)
+    		console.log("done")
+    		event.preventDefault()
+    		console.log("form submitted!")  // sanity check
+    		add_user(addr)
+		})
+
+		function show_address(addr) {
+    		var address = document.getElementById("address");
+    		if (typeof addr !== 'undefined') {
+        		address.innerHTML = "Вы вошли под кошельком с адресом: " + addr;
+    		} else {
+        		address.innerHTML = "Нажмите на кнопку входа еще раз";
+    		}
+		}
+
+		function connect() {
+    		if (typeof ethereum !== 'undefined') {
+       		ethereum
+        		.request({ method: 'eth_requestAccounts' })
+        		.catch((error) => {
+        		if (error.code === 4001) {
+            		// EIP-1193 userRejectedRequest error
+            		console.log('Please connect to MetaMask.');
+        		} else {
+            		console.error(error);
+        		}
+        		}); 
+        		let addr = web3.eth.accounts[0];
+        		setCookie('address', encodeURIComponent(addr), {secure: true, 'max-age': 3600});
+        		return addr;
+    		} else {
+        		document.getElementById("address").innerHTML = "Error";
+    		}
+		}
+
+		function add_user(addr) {
+    		console.log("create post is working!") // sanity check
+    		$.ajax({
+        		type: "POST", // http method
+        		data: {
+            		the_post: addr,
+            		csrfmiddlewaretoken: window.CSRF_TOKEN,
+            		action: "add_user"
+        		}, // data sent with the post request
+
+        		// handle a successful response
+        		success: function (json) {
+            		$('#post-text').val(''); // remove the value from the input
+            		console.log(json); // log the returned json to the console
+            		console.log("success"); // another sanity check
+        		},
+
+        		// handle a non-successful response
+        		error: function (xhr, errmsg, err) {
+            		$('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: " + errmsg +
+                		" <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+            		console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        		}
+    		})
+		}
+
+		function initContract() {
+		    const abi = [{
+        		"constant":true,
+        		"inputs":[{
+            		"name":"id",
+            		"type":"uint256"
+        		}],
+        		"name":"CheckState",
+        		"outputs":[{
+            		"name":"",
+            		"type":"string"
+        		}],
+        		"payable":false,
+        		"stateMutability":"view",
+        		"type":"function"
+    		},{
+        		"constant":false,
+        		"inputs":[{
+            		"name":"id",
+            		"type":"uint256"
+        		}],
+        		"name":"Refund",
+        		"outputs":[],
+        		"payable":false,
+        		"stateMutability":"nonpayable",
+        		"type":"function"
+    		},{
+        		"constant":false,
+        		"inputs":[{
+            		"name":"id",
+            		"type":"uint256"
+        		}],
+        		"name":"delivered",
+        		"outputs":[],
+        		"payable":false,
+        		"stateMutability":"nonpayable",
+        		"type":"function"
+    		},{
+        		"constant":false,
+        		"inputs":[{
+            		"name":"id",
+            		"type":"uint256"
+        		}],
+        		"name":"CancelOrder",
+        		"outputs":[],
+        		"payable":false,
+        		"stateMutability":"nonpayable",
+        		"type":"function"
+    		},{
+        		"constant":false,
+        		"inputs":[{
+            		"name":"id",
+            		"type":"uint256"
+        		}],
+        		"name":"CancelOrderAdmin",
+        		"outputs":[],
+        		"payable":false,
+        		"stateMutability":"nonpayable",
+        		"type":"function"
+    		},{
+        		"constant":false,
+        		"inputs":[{
+            		"name":"id",
+            		"type":"uint256"
+        		}],
+        		"name":"OrderArranged",
+        		"outputs":[],
+        		"payable":false,
+        		"stateMutability":"nonpayable",
+        		"type":"function"
+    		},{
+        		"constant":true,
+        		"inputs":[{
+            		"name":"id",
+            		"type":"uint256"
+        		}],
+        		"name":"getOrder",
+        		"outputs":[{
+            		"name":"buyer",
+            		"type":"address"
+        		},{
+            		"name":"depositOut",
+            		"type":"uint256"
+        		},{
+            		"name":"currentState",
+            		"type":"uint8"
+        		},{
+            		"name":"OrderTime",
+            		"type":"uint256"
+        		}],
+        		"payable":false,
+        		"stateMutability":"view",
+        		"type":"function"
+    		},{
+        		"constant":false,
+        		"inputs":[],
+        		"name":"deposit",
+        		"outputs":[],
+        		"payable":true,
+        		"stateMutability":"payable",
+        		"type":"function"
+    		},{
+        		"constant":true,
+        		"inputs":[{
+            		"name":"buyer",
+            		"type":"address"
+        		}],
+        		"name":"getIDs",
+        		"outputs":[{
+            		"name":"",
+            		"type":"uint256[]"
+        		}],
+        		"payable":false,
+        		"stateMutability":"view",
+        		"type":"function"
+    		}]
+    		const contract_Address = {
+        		"3": "0xe0e00e259fe5649932953955f5bf82414c359029"
+    		}
+
+   		try {
+        		var current_network = web3.version.network;
+        		var contract = web3.eth.contract(abi).at(contract_Address[current_network]);
+    		} catch (error) {
+        		console.log(error)
+    		}
+    		return contract;
+		}
+
+		function getUsers(){
+			var users = JSON.parse("{{data|escapejs}}");
+			users.users.forEach(user => {
+        		getIdFromSC(user['wallet_address']);
+			})
+		}
+
+		function getIdFromSC(addr) {
+    		var contract = initContract();
+    		contract.getIDs(
+        		addr,
+        		function (error, ids) {
+            		if(!error){
+                		getOrder_js(ids);
+            		}else{
+                		console.log(error);
+           		 }
+       		}); 
+		}
+		
+		function getOrder_js(ids) {
+		    var contract = initContract();
+    		ids.forEach(id_dirty => {
+        		id = id_dirty['c'][0];
+				getOrder_SC(contract, id);
+   		});
+		}
+
+		function getOrder_SC(contract, id){
+        	contract.getOrder(
+            	id,
+            	function (error, Order) {
+                	if(!error){
+                    	showOrder(Order, id);
+                	}else{
+                    	console.log(error);
+                	}
+            	}
+        	);   
+		}
+
+		function showOrder(Order, id) {
+    		var orderId = id;
+    		console.log("id: ", orderId);
+    		var address = Order[0];
+    		console.log("address: ", address);
+    		var deposit = Order[1]['c'][0];
+			console.log(deposit)
+			deposit = deposit*45000/10000;
+			console.log(deposit)
+    		console.log("deposit: ", deposit);
+    		var status = Order[2]['c'][0];
+			switch (status) {
+	  		case 0:
+	    		status = "Ожидается оплаты";
+	    		break;
+	  		case 1:
+	    		status = "Отменен ";
+	    		break;
+	  		case 2:
+	    		status = "Сборка заказа";
+	    		break;
+	  		case 3:
+	    		status = "Доставляется";
+	    		break;
+	  		case 4:
+	    		status = "Возврат средств";
+	    		break;
+	  		case 5:
+	    		status = "Выполнен";
+	    		break;
+	  		default:
+	    		status = "Ожидается оплата";
+			}
+    		console.log("status: ", status);
+    		var time = Order[3]['c'][0];
+    		time = timeConverter(time);
+    		console.log("time: ", time);
+	
+    		let order_template = document.createElement('div');
+    		order_template.append(orders_users.content.cloneNode(true));
+    		var lk_user = document.getElementsByClassName("staticText");
+    		lk_user[0].appendChild(order_template);
+	
+    		order_time = document.getElementById("order_time");
+    		order_id = document.getElementById("order_id");
+			order_addr = document.getElementById("order_addr");	
+    		order_price = document.getElementById("order_price");
+    		order_state = document.getElementById("order_state");
+			order_cancel_button = document.getElementById("cancel_order");
+    		send_delivery_button = document.getElementById("send_delivery");
+    		delivered_button = document.getElementById("delivered");
+	
+    		order_time.innerHTML = "Заказ от " + time;
+    		order_id.innerHTML = "Номер заказа: " + orderId;
+			order_addr.innerHTML = "Адрес покупателя: " + address;	
+    		order_price.innerHTML = "Цена: " + deposit + " руб.";
+    		order_state.innerHTML = "Статус заказа: " + status;
+	
+    		order_time.removeAttribute('id');
+    		order_id.removeAttribute('id');
+			order_addr.removeAttribute('id');
+    		order_price.removeAttribute('id');
+    		order_state.removeAttribute('id');		
+			order_cancel_button.setAttribute('onclick', "CancelOrderAdmin_js(" +orderId + ")");
+			order_cancel_button.removeAttribute('id')
+			send_delivery_button.setAttribute('onclick', "OrderArranged_js(" + orderId + ")");
+			send_delivery_button.removeAttribute('id')
+			delivered_button.setAttribute('onclick', "delivered_js(" + orderId + ")");
+			delivered_button.removeAttribute('id')
+		}
+
+		function timeConverter(UNIX_timestamp){
+  			var a = new Date(UNIX_timestamp * 1000);
+  			var months = ['Января','Февраля','Марта','Апреля','Мая','Июня','Июля','Августа','Сентября','Октября','Ноября','Декабря'];
+  			var year = a.getFullYear();
+  			var month = months[a.getMonth()];
+  			var date = a.getDate();
+  			var hour = a.getHours();
+  			var min = a.getMinutes();
+  			var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min;
+  			return time;
+		}
+
+		function OrderArranged_js(id_order) {
+    		connect();
+    		console.log(id_order)
+    		var contract = initContract();
+    		contract.OrderArranged(id_order, function (error, result) {
+        		if (!error)
+            		console.log(result);
+        		else
+            		console.error(error);
+    		});
+		}
+
+		function delivered_js(id_order) {
+    		connect();
+    		console.log(id_order)
+    		var contract = initContract();
+    		contract.delivered(id_order, function (error, result) {
+        		if (!error)
+            		console.log(result);
+        		else
+            		console.error(error);
+    		});
+		}
+
+		function CancelOrderAdmin_js(id_order) {
+    		connect();
+    		console.log(id_order)
+    		var contract = initContract();
+    		contract.CancelOrderAdmin(id_order, function (error, result) {
+        		if (!error)
+            		console.log(result);
+        		else
+            		console.error(error);
+    		});
+		}
+ 	</script>
+</body>
+</html>
+
+            
+
+
+
+        
+        
+        
+     

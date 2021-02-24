@@ -4,7 +4,7 @@ window.addEventListener('load', function () {
     if (typeof web3 !== 'undefined') {
         // Use Mist/MetaMask's provider
         console.log("Web3 detected!");
-        window.web3 = new Web3(web3.currentProvider);
+        window.web3 = new Web3("https://ropsten.infura.io/v3/fa2d51dfb7214816ae1e14b2f3145619");
         // Now you can start your app & access web3 freely:
         console.log("Вы подключены к Блокчейн");
         var currentNetwork = web3.version.network;
